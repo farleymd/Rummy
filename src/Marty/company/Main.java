@@ -24,11 +24,9 @@ public class Main {
 
         Hand computerHand = computerPlayer.getPlayerHand();
         computerHand.buildHand(newDeck);
-        computerHand.displayHand();
 
         runTurns(humanHand, newDeck, newDiscard);
-        runTurns(humanHand, newDeck, newDiscard);
-        runTurns(humanHand, newDeck, newDiscard);
+
     }
 
     public static void runTurns(Hand playerHand, Deck newDeck, DiscardPile newDiscard){
@@ -42,11 +40,17 @@ public class Main {
         if (userDraw.equalsIgnoreCase("Deck")){
             Card newCard = newDeck.drawFromDeck();
             playerHand.addCard(newCard);
+            playerHand.displayHand();
 
         } else if (userDraw.equalsIgnoreCase("Discard")){
             Card newCard = newDiscard.drawFromDiscard();
             playerHand.addCard(newCard);
+            playerHand.displayHand();
         }
+
+        playerHand.checkForGroup();
+
+        playerHand.checkForRun();
 
     }
 

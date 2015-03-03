@@ -122,29 +122,29 @@ public class Hand {
             }
             if (rankAce.size() == 3 || rankAce.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank2.size() == 4) {
+            } else if (rank2.size() == 3 ||rank2.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank3.size() == 4) {
+            } else if (rank3.size() == 3 ||rank3.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank4.size() == 4) {
+            } else if (rank4.size() == 3 ||rank4.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank5.size() == 4) {
+            } else if (rank5.size() == 3 ||rank5.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank6.size() == 4) {
+            } else if (rank6.size() == 3 ||rank6.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank7.size() == 4) {
+            } else if (rank7.size() == 3 ||rank7.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank8.size() == 4) {
+            } else if (rank8.size() == 3 ||rank8.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank9.size() == 4) {
+            } else if (rank9.size() == 3 ||rank9.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rank10.size() == 4) {
+            } else if (rank10.size() == 3 ||rank10.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rankJack.size() == 4) {
+            } else if (rankJack.size() == 3 ||rankJack.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rankQueen.size() == 4) {
+            } else if (rankQueen.size() == 3 ||rankQueen.size() == 4) {
                 runTheGroup(yp);
-            } else if (rankAce.size() == 3 ||rankKing.size() == 4) {
+            } else if (rankKing.size() == 3 ||rankKing.size() == 4) {
                 runTheGroup(yp);
             }
         }
