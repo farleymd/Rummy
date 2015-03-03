@@ -1,0 +1,37 @@
+CARD
+
+DECK
+
+DISCARDPILE 
+  ArrayList discardPile
+  Method drawDiscardCard
+  Method discardCard
+  
+HAND
+  ArrayList handCards
+  Method buildHand
+  Method displayHand
+  Method handIsEmpty
+  Method checkForRun
+  Method checkForGroup
+  Method layOnCard
+
+PLAYER
+  int Score
+  Hand playerHand
+  
+  RUNS
+    int startRank
+    int endRank
+    int suit
+    Method getRunDisplay
+  
+  GROUP
+    int rank
+    ArrayList existingGroup
+    Method getGroupDisplay
+  
+  PLAYERFIELD
+    ArrayList playedRuns
+    ArrayList playedGroups
+    Method displayField
