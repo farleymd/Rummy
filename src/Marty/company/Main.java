@@ -20,14 +20,18 @@ public class Main {
         Hand humanHand = humanPlayer.getPlayerHand();
         humanHand.buildHand(newDeck);
         humanHand.displayHand();
-        runTurns(humanHand, newDeck, newDiscard);
+
 
         Hand computerHand = computerPlayer.getPlayerHand();
         computerHand.buildHand(newDeck);
         computerHand.displayHand();
+
+        runTurns(humanHand, newDeck, newDiscard);
+        runTurns(humanHand, newDeck, newDiscard);
+        runTurns(humanHand, newDeck, newDiscard);
     }
 
-    public static void runTurns(Object humanHand, Deck newDeck, DiscardPile newDiscard){
+    public static void runTurns(Hand playerHand, Deck newDeck, DiscardPile newDiscard){
         //Player draw
         newDiscard.displayDiscard(newDeck);
         Scanner scanner = new Scanner(System.in);
@@ -37,9 +41,11 @@ public class Main {
 
         if (userDraw.equalsIgnoreCase("Deck")){
             Card newCard = newDeck.drawFromDeck();
-        } else if (userDraw.equalsIgnoreCase("Discard")){
-            //Card newCard = newDiscard.drawFromDiscard();
+            playerHand.addCard(newCard);
 
+        } else if (userDraw.equalsIgnoreCase("Discard")){
+            Card newCard = newDiscard.drawFromDiscard();
+            playerHand.addCard(newCard);
         }
 
     }

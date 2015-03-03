@@ -51,6 +51,11 @@ public class Hand {
         System.out.println(handCard);
     }
 
+    public ArrayList addCard (Card newCard){
+        handCard.add(newCard);
+        return handCard;
+    }
+
     public void checkForRun() {
 
     }
