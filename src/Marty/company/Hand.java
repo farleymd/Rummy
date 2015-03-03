@@ -48,11 +48,16 @@ public class Hand {
     }
 
     public void displayHand(){
-        System.out.println(handCard);
+        for (int i = 0; i < handCard.size(); i++){
+            int identifier = i+1;
+            System.out.println(identifier + "." + handCard.get(i).toString());
+        }
+        System.out.println("\n");
     }
 
     public ArrayList addCard (Card newCard){
         handCard.add(newCard);
+        Collections.sort(handCard);
         return handCard;
     }
 

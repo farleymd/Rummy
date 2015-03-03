@@ -25,8 +25,12 @@ public class DiscardPile {
 
     public void displayDiscard(Deck deck){
         Card discardCard = deck.drawFromDeck();
-        System.out.println("Discard Card: " + discardCard);
         discardPile.add(discardCard);
+        System.out.println("Discard Pile: " + discardPile);
         return;
+    }
+
+    public void addToDiscardPile(Hand hand){
+
     }
 }

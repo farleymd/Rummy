@@ -25,11 +25,11 @@ public class Main {
         Hand computerHand = computerPlayer.getPlayerHand();
         computerHand.buildHand(newDeck);
 
-        runTurns(humanHand, newDeck, newDiscard);
+        runHumanTurns(humanHand, newDeck, newDiscard);
 
     }
 
-    public static void runTurns(Hand playerHand, Deck newDeck, DiscardPile newDiscard){
+    public static void runHumanTurns(Hand playerHand, Deck newDeck, DiscardPile newDiscard){
         //Player draw
         newDiscard.displayDiscard(newDeck);
         Scanner scanner = new Scanner(System.in);
@@ -51,6 +51,10 @@ public class Main {
         playerHand.checkForGroup();
 
         playerHand.checkForRun();
+
+        System.out.println("You need to discard a card. Which one would you like to discard?");
+        String playerDiscard = scanner.nextLine();
+
 
     }
 
