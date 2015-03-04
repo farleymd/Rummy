@@ -24,13 +24,18 @@ public class DiscardPile {
     }
 
     public void displayDiscard(Deck deck){
-        Card discardCard = deck.drawFromDeck();
-        discardPile.add(discardCard);
         System.out.println("Discard Pile: " + discardPile);
         return;
     }
 
-    public void addToDiscardPile(Hand hand){
+    public void displayDiscardFirstTime(Deck deck){
+        Card discardCard = deck.drawFromDeck();
+        discardPile.add(discardCard);
+        return;
+    }
 
+    public void addToDiscardPile(Card playerDiscardCard){
+        discardPile.add(playerDiscardCard);
+        return;
     }
 }

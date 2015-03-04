@@ -38,6 +38,7 @@ public class Card implements Comparable<Card> {
     }
 
     public int getRank() {
+
         return rank;
     }
 

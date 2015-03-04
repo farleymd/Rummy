@@ -12,6 +12,23 @@ public class Hand {
 //        this.handCard = handCard;
 //    }
 
+    public Card getCard (int index){
+        Card returnCard = handCard.get(index);
+        return returnCard;
+    }
+
+    public ArrayList addCard (Card newCard){
+        handCard.add(newCard);
+        Collections.sort(handCard);
+        return handCard;
+    }
+
+    public ArrayList removeCard (Card newCard){
+        handCard.remove(newCard);
+        Collections.sort(handCard);
+        return handCard;
+    }
+
     public ArrayList testBuild(Deck deck){
         Card card1 = new Card(0,0);
         handCard.add(card1);
@@ -31,8 +48,14 @@ public class Hand {
         Card card6 = new Card(1,1);
         handCard.add(card6);
 
-        Card card7 = new Card(1,2);
+        Card card7 = new Card(4,3);
         handCard.add(card7);
+
+        Card card8 = new Card(10,3);
+        handCard.add(card8);
+
+        Card card9 = new Card(8,3);
+        handCard.add(card9);
 
         return handCard;
     }
@@ -48,17 +71,23 @@ public class Hand {
     }
 
     public void displayHand(){
+        Collections.sort(handCard);
         for (int i = 0; i < handCard.size(); i++){
             int identifier = i+1;
-            System.out.println(identifier + "." + handCard.get(i).toString());
+            System.out.print(identifier + ". " + handCard.get(i).toString() + " ");
         }
         System.out.println("\n");
     }
 
-    public ArrayList addCard (Card newCard){
-        handCard.add(newCard);
-        Collections.sort(handCard);
-        return handCard;
+    public boolean notEmpty(){
+        boolean empty = false;
+        int handSize = handCard.size();
+        if (handSize != 0){
+            empty = false;
+        } else {
+            empty = true;
+        }
+        return empty;
     }
 
     public void checkForRun() {
@@ -87,70 +116,108 @@ public class Hand {
             switch (rank) {
                 case 0:
                     rankAce.add(yp);
+                    if (rankAce.size() == 3 || rankAce.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 1:
                     rank2.add(yp);
+                    if (rank2.size() == 3 || rank2.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 2:
                     rank3.add(yp);
+                    if (rank3.size() == 3 || rank3.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 3:
                     rank4.add(yp);
+                    if (rank4.size() == 3 || rank4.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 4:
                     rank5.add(yp);
+                    if (rank5.size() == 3 || rank5.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 5:
                     rank6.add(yp);
+                    if (rank6.size() == 3 || rank6.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 6:
                     rank7.add(yp);
+                    if (rank7.size() == 3 || rank7.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 7:
                     rank8.add(yp);
+                    if (rank8.size() == 3 || rank8.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 8:
                     rank9.add(yp);
+                    if (rank9.size() == 3 || rank9.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 9:
                     rank10.add(yp);
+                    if (rank10.size() == 3 || rank10.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 10:
                     rankJack.add(yp);
+                    if (rankJack.size() == 3 || rankJack.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 11:
                     rankQueen.add(yp);
+                    if (rankQueen.size() == 3 || rankQueen.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
                 case 12:
                     rankKing.add(yp);
+                    if (rankKing.size() == 3 || rankKing.size() == 4) {
+                        runTheGroup(yp);
+                    } else {
+                        continue;
+                    }
                     break;
-            }
-            if (rankAce.size() == 3 || rankAce.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank2.size() == 3 ||rank2.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank3.size() == 3 ||rank3.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank4.size() == 3 ||rank4.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank5.size() == 3 ||rank5.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank6.size() == 3 ||rank6.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank7.size() == 3 ||rank7.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank8.size() == 3 ||rank8.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank9.size() == 3 ||rank9.size() == 4) {
-                runTheGroup(yp);
-            } else if (rank10.size() == 3 ||rank10.size() == 4) {
-                runTheGroup(yp);
-            } else if (rankJack.size() == 3 ||rankJack.size() == 4) {
-                runTheGroup(yp);
-            } else if (rankQueen.size() == 3 ||rankQueen.size() == 4) {
-                runTheGroup(yp);
-            } else if (rankKing.size() == 3 ||rankKing.size() == 4) {
-                runTheGroup(yp);
             }
         }
     }
@@ -163,6 +230,8 @@ public class Hand {
         System.out.println("You have a group of " + rankString + "s! Do you want to run the group? Y or N");
         String playerAnswer = scanner.next();
         if (playerAnswer.equalsIgnoreCase("Y")){
+            //TODO
+            return;
 
         }
     }
