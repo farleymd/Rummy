@@ -50,14 +50,8 @@ public class RummyGame {
             deck.shuffle();
             discard = new DiscardPile();
 
-            // deal the starting hands and start the discard pile
-//            deal();
-            for (int i = 0; i < 52; i++) {
-                discard.addCard(deck.draw());
-            }
-
-            discard.moveToDeck(deck);
-
+            deal();
+            playerTurn();
 
             // player needs to draw from the deck or discard
                 // if player draws from deck and it is empty, reverse discard pile and move to deck
@@ -80,8 +74,10 @@ public class RummyGame {
     }
 
     private void printBoard() {
-        System.out.print("Your Hand: " + currentPlayer.getPlayerHand());
-
+        System.out.println("#########################################");
+        System.out.print("Hand: " + currentPlayer.getPlayerHand());
+        System.out.println("");
+        scanner.next();
     }
 
     // deal the starting hand to each player
@@ -99,7 +95,7 @@ public class RummyGame {
         // get the position of the current player
         int playerPos = players.indexOf(currentPlayer);
 
-        // if the player is the last in the list, go back to the first player
+        // go back to the first player if we are on the last
         if (playerPos == players.size() - 1) {
             currentPlayer = players.getFirst();
         } else {
