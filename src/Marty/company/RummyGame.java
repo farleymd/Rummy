@@ -223,26 +223,4 @@ public class RummyGame {
         }
         return false;
     }
-
-    private int getPositiveIntFromUser() {
-        int userChoice;
-
-        while (true) {
-            try {
-                System.out.print("=> ");
-                userChoice = scanner.nextInt();
-            } catch (InputMismatchException ime) {
-                System.out.println("Please enter a valid menu item");
-                scanner.next();
-                continue;
-            }
-
-            if (userChoice <= 0) {
-                System.out.println("Please enter a valid menu item");
-                continue;
-            }
-
-            return userChoice;
-        }
-    }
 }
