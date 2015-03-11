@@ -3,7 +3,7 @@ CARD
 DECK
 
 DISCARDPILE 
-  ArrayList discardPile
+  ArrayList cards
   Method drawDiscardCard
   Method discardCard
   

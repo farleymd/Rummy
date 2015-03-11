@@ -1,5 +1,6 @@
 package Marty.company;
 
+import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -46,14 +47,18 @@ public class RummyGame {
 
         while (!gameWon()) {
             deck = new Deck();
+            deck.shuffle();
             discard = new DiscardPile();
 
             // deal the starting hands and start the discard pile
-            deal(players);
-            discard.addToDiscardPile(deck.drawFromDeck());
+//            deal();
+            for (int i = 0; i < 52; i++) {
+                discard.addCard(deck.draw());
+            }
 
-            playerTurn();
-            System.out.println();
+            discard.moveToDeck(deck);
+
+
             // player needs to draw from the deck or discard
                 // if player draws from deck and it is empty, reverse discard pile and move to deck
 
@@ -80,10 +85,12 @@ public class RummyGame {
     }
 
     // deal the starting hand to each player
-    private void deal(LinkedList<Player> players) {
+    private void deal() {
         for (Player player : players) {
             Hand playerHand = player.getPlayerHand();
-            playerHand.buildHand(deck);
+            for (int i = 0; i < 10; i++) {
+                playerHand.addCard(deck.draw());
+            }
         }
     }
 

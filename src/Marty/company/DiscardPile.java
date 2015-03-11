@@ -1,41 +1,33 @@
 package Marty.company;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
+import java.util.LinkedList;
 
 /**
- * Created by marty.farley on 3/1/2015.
+ * Holds the discards
  */
 public class DiscardPile {
-    private ArrayList<Card> discardPile;
+    private LinkedList<Card> cards;
 
+    // creates a new empty discard pile
     public DiscardPile() {
-        discardPile = new ArrayList<Card>();
+        cards = new LinkedList<Card>();
     }
 
-    public void setDiscardPile(ArrayList<Card> discardPile) {
-        this.discardPile = discardPile;
+    // adds a card to the discard pile
+    public void addCard(Card card){
+        cards.add(card);
     }
 
-    public Card drawFromDiscard()
-    {
-        int index = discardPile.size();
-        return discardPile.remove(discardPile.size() -1);
+    // returns a card from the discard pile
+    public Card draw() {
+        return cards.pop();
     }
 
-    public void displayDiscard(Deck deck){
-        System.out.println("Discard Pile: " + discardPile);
-        return;
-    }
-
-    public void displayDiscardFirstTime(Deck deck){
-        Card discardCard = deck.drawFromDeck();
-        discardPile.add(discardCard);
-        return;
-    }
-
-    public void addToDiscardPile(Card playerDiscardCard){
-        discardPile.add(playerDiscardCard);
-        return;
+    // reverses the card order and moves them to the deck
+    public void moveToDeck(Deck deck) {
+        Collections.reverse(cards);
+        deck.addCards(cards);
+        cards = new LinkedList<Card>();
     }
 }
