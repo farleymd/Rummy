@@ -15,8 +15,7 @@ public class Hand {
 
     // returns the card at the position in the hand
     public Card getCard (int index){
-        Card returnCard = cards.get(index);
-        return returnCard;
+        return cards.get(index);
     }
 
     public int getPoints() {
@@ -30,11 +29,18 @@ public class Hand {
     // add a card to the hand
     public void addCard (Card newCard){
         cards.add(newCard);
+        Collections.sort(cards);
     }
 
     // remove a card from the hand
     public void removeCard (int position){
         cards.remove(position);
+        Collections.sort(cards);
+    }
+
+    // remove a group of cards
+    public void removeCards(ArrayList<Card> cards) {
+        cards.removeAll(cards);
     }
 
     public boolean isEmpty(){

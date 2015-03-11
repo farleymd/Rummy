@@ -25,8 +25,8 @@ public class DiscardPile {
     }
 
     // returns the top card
-    public Card peek() {
-        return cards.peek();
+    public Card getTopCard() {
+        return cards.peekLast();
     }
 
     // reverses the card order and moves them to the deck
