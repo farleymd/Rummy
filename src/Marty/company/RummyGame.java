@@ -38,11 +38,11 @@ public class RummyGame {
         players = new LinkedList<Player>();
         players.push(new Player("Player"));
         players.push(new Player("Computer"));     // TODO make this a computer player
-        currentPlayer = players.peek();
+        currentPlayer = players.getFirst();
 
         // TODO let use choose either the number of deals or points to win the game
         int maxScore = 500;
-        System.out.printf("The first player to hit %d points wins the game.", maxScore);
+        System.out.printf("The first player to hit %d points wins the game.\n", maxScore);
 
         while (!gameWon()) {
             deck = new Deck();
@@ -52,7 +52,8 @@ public class RummyGame {
             deal(players);
             discard.addToDiscardPile(deck.drawFromDeck());
 
-
+            playerTurn();
+            System.out.println();
             // player needs to draw from the deck or discard
                 // if player draws from deck and it is empty, reverse discard pile and move to deck
 
@@ -66,6 +67,16 @@ public class RummyGame {
                 // if score >= total to win -> player wins
                 // else deal again
         }
+    }
+
+
+    private void playerTurn() {
+        printBoard();
+    }
+
+    private void printBoard() {
+        System.out.print("Your Hand: " + currentPlayer.getPlayerHand());
+
     }
 
     // deal the starting hand to each player

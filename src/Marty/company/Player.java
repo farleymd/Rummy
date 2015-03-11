@@ -9,6 +9,7 @@ public class Player {
     private Hand playerHand;
 
     public Player(String name) {
+        this.playerHand = new Hand();
         this.name = name;
     }
 
@@ -21,8 +22,6 @@ public class Player {
     }
 
     public Hand getPlayerHand() {
-        playerHand = new Hand();
-
         return playerHand;
     }
 

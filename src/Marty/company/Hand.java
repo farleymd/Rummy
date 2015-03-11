@@ -235,4 +235,16 @@ public class Hand {
 
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Card card : handCard) {
+            stringBuilder.append(card);
+            stringBuilder.append(" ");
+        }
+
+        return stringBuilder.toString();
+    }
 }
