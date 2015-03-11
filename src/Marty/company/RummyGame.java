@@ -1,6 +1,5 @@
 package Marty.company;
 
-import java.util.Collections;
 import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -16,7 +15,7 @@ public class RummyGame {
 
     public static void main(String[] args) {
         printBanner();
-        new RummyGame().playGame();
+        new RummyGame().run();
         scanner.close();
     }
 
@@ -35,23 +34,40 @@ public class RummyGame {
         );
     }
 
-    private void playGame() {
+    private void run() {
         players = new LinkedList<Player>();
-        players.push(new Player("Player"));
-        players.push(new Player("Computer"));     // TODO make this a computer player
+        players.push(new HumanPlayer("Computer"));     // TODO make this a computer player
+        players.push(new ComputerPlayer());
         currentPlayer = players.getFirst();
+
+        int handSize = 10;
 
         // TODO let use choose either the number of deals or points to win the game
         int maxScore = 500;
         System.out.printf("The first player to hit %d points wins the game.\n", maxScore);
 
+        // deal new hands until the game is won
         while (!gameWon()) {
+            // initialize the deck and discard pile
             deck = new Deck();
             deck.shuffle();
             discard = new DiscardPile();
 
-            deal();
-            playerTurn();
+            // deal starting hand to each player
+            for (Player player : players) {
+                player.newHand();
+                for (int i = 0; i < handSize; i++) {
+                    player.hand.addCard(deck.draw());
+                }
+            }
+
+            // start the discard pile
+            discard.addCard(deck.draw());
+
+            // players take turns until one runs out of cards
+            while (true) {
+                playerTurn();
+            }
 
             // player needs to draw from the deck or discard
                 // if player draws from deck and it is empty, reverse discard pile and move to deck
@@ -70,24 +86,22 @@ public class RummyGame {
 
 
     private void playerTurn() {
-        printBoard();
+//        while (true) {
+            printBoard();
+            System.out.println("Draw a card from <S>tock or <D>iscard");
+            String choice = scanner.nextLine();
+//        }
     }
 
     private void printBoard() {
         System.out.println("#########################################");
-        System.out.print("Hand: " + currentPlayer.getPlayerHand());
-        System.out.println("");
-        scanner.next();
-    }
 
-    // deal the starting hand to each player
-    private void deal() {
-        for (Player player : players) {
-            Hand playerHand = player.getPlayerHand();
-            for (int i = 0; i < 10; i++) {
-                playerHand.addCard(deck.draw());
-            }
-        }
+        System.out.printf("# SCORE       YOU: %-3d  COMPUTER: %-3d   #\n",
+                players.get(0).getScore(), players.get(1).getScore()
+        );
+        System.out.println("# ");
+        System.out.println("Hand: " + currentPlayer.getHand());
+        System.out.printf("Stock: X (%5d) Discard: %s (%d)\n", deck.size(), discard.peek().toString(), discard.size());
     }
 
     // set the current player to the next player in the list

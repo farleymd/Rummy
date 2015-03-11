@@ -24,10 +24,23 @@ public class DiscardPile {
         return cards.pop();
     }
 
+    // returns the top card
+    public Card peek() {
+        return cards.peek();
+    }
+
     // reverses the card order and moves them to the deck
     public void moveToDeck(Deck deck) {
         Collections.reverse(cards);
         deck.addCards(cards);
         cards = new LinkedList<Card>();
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
+    public int size() {
+        return cards.size();
     }
 }

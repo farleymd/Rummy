@@ -1,37 +1,34 @@
 package Marty.company;
 
-/**
- * Created by marty.farley on 3/1/2015.
- */
-public class Player {
+public abstract class Player {
     private String name;
-    private int Score;
-    private Hand playerHand;
+    private int score;
+    protected Hand hand;
 
     public Player(String name) {
-        this.playerHand = new Hand();
         this.name = name;
     }
 
+    public abstract void drawCard();
+
     public int getScore() {
-        return Score;
+        return score;
     }
 
     public void setScore(int score) {
-        Score = score;
+        this.score = score;
     }
 
-    public Hand getPlayerHand() {
-        return playerHand;
+    public Hand getHand() {
+        return hand;
     }
 
-    public void setPlayerHand(Hand playerHand) {
-        this.playerHand = playerHand;
+    public void newHand() {
+        this.hand = new Hand();
     }
 
     @Override
     public String toString() {
         return name;
     }
-
 }
