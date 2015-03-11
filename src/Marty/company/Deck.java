@@ -20,9 +20,8 @@ public class Deck {
         }
     }
 
-    // creates a new deck with an existing collection of cards
-    public Deck(Collection<Card> cards) {
-        this.cards = new LinkedList<Card>();
+    // adds a collection of cards to the deck
+    public void addCards(Collection<Card> cards) {
         this.cards.addAll(cards);
     }
 
@@ -34,5 +33,9 @@ public class Deck {
     // draw a card from the deck
     public Card draw() {
         return cards.pop();
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
     }
 }

@@ -50,7 +50,7 @@ public class Hand {
             stringBuilder.append(cards.get(i));
 
             // don't add a space after the last card
-            if (i != cards.size()) {
+            if (i != cards.size() - 1) {
                 stringBuilder.append(" ");
             }
         }
