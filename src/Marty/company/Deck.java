@@ -1,39 +1,38 @@
 package Marty.company;
 
-import java.util.Random;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 /**
- * Created by marty.farley on 3/1/2015.
+ * Represents a standard 52 card deck
  */
 public class Deck {
+    private LinkedList<Card> cards;
 
-    private ArrayList<Card> cards;
-
-    Deck()
-    {
-        cards = new ArrayList<Card>();
-        for (int a= 0; a <= 3; a++)
-        {
-            for (int b = 0; b <= 12; b++)
-            {
-                cards.add(new Card(b, a));
+    // creates a new deck and populates it with 52 cards
+    public Deck() {
+        this.cards = new LinkedList<Card>();
+        for (int suit = 0; suit <= 3; suit++) {
+            for (int rank = 0; rank <= 12; rank++) {
+                cards.add(new Card(rank, suit));
             }
         }
     }
 
-    public ArrayList<Card> getCards() {
-        return cards;
+    // creates a new deck with an existing collection of cards
+    public Deck(Collection<Card> cards) {
+        this.cards = new LinkedList<Card>();
+        this.cards.addAll(cards);
     }
 
-    public void setCards(ArrayList<Card> cards) {
-        this.cards = cards;
+    // shuffles the deck
+    public void shuffle() {
+        Collections.shuffle(cards);
     }
 
-    public Card drawFromDeck()
-    {
-        Random generator = new Random();
-        int index = generator.nextInt(cards.size());
-        return cards.remove(index);
+    // draw a card from the deck
+    public Card draw() {
+        return cards.pop();
     }
 }
