@@ -35,8 +35,6 @@ public class RummyGame {
     }
 
     private void run() {
-        // TODO let user enter points or deals to win
-
         players = new LinkedList<Player>();
         players.push(new HumanPlayer("Player"));
         players.push(new ComputerPlayer());
@@ -215,8 +213,8 @@ public class RummyGame {
     }
 
     private boolean gameWon() {
+        // TODO let user choose the rules for winning the game
         for (Player player : players) {
-            // TODO hard coded max score should be moved outside so user can set it
             if (player.getScore() >= 100) {
                 return true;
             }
