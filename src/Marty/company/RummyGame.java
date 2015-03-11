@@ -35,16 +35,21 @@ public class RummyGame {
     }
 
     private void run() {
+        // TODO let user enter points or deals to win
+
         players = new LinkedList<Player>();
-        players.push(new HumanPlayer("Computer"));     // TODO make this a computer player
+        players.push(new HumanPlayer("Player"));
         players.push(new ComputerPlayer());
         currentPlayer = players.getFirst();
 
-        int handSize = 10;
+        int handSize = 10;  // for possible multiplayer mode
 
-        // TODO let use choose either the number of deals or points to win the game
-        int maxScore = 500;
-        System.out.printf("The first player to hit %d points wins the game.\n", maxScore);
+        System.out.println("The first player to hit 100 points wins the game.");
+        System.out.println("TIP: When selecting cards, enter the position they are at in your hand.");
+        System.out.println("For example: ♦J ♥7 ♥8 ♣3 ♣7 ♦A ♣J ♥5 ♣8 ♦3");
+        System.out.println("If you want to select ♣3, you would enter 4.");
+        System.out.println("If you want to select ♥8 ♦A ♥5 ♦J, enter them like this: 3 6 8 1");
+        System.out.println("Sorry!");
 
         // deal new hands until the game is won
         while (!gameWon()) {
@@ -66,42 +71,123 @@ public class RummyGame {
 
             // players take turns until one runs out of cards
             while (true) {
-                playerTurn();
+                if (currentPlayer instanceof HumanPlayer) {
+                    humanTurn();
+                } else {
+                    computerTurn();
+                }
+
+                if (currentPlayer.hand.isEmpty()) {
+                    currentPlayer.addToScore(calculatePoints());
+                }
+
+                nextPlayer();
             }
+        }
+    }
 
-            // player needs to draw from the deck or discard
-                // if player draws from deck and it is empty, reverse discard pile and move to deck
+    private void humanTurn() {
+        printBoard();
 
-            // player options
-                // meld (only one)
-                // lay off (add to a meld)
-                // discard
-                    // can not be a card picked up from discard this turn
+        System.out.print(
+                "Draw a card from\n" +
+                "1. Deck\n" +
+                "2. Discard\n"
+        );
+        int userChoice = getIntRangeInput(1, 2);
+        switch (userChoice) {
+            case 1:
+                drawFromDeck();
+                break;
+            case 2:
+                drawFromDiscard();
+                break;
+            default:
+                // this shouldn't happen
+                System.out.println("Something went wrong.");
+        }
 
-            // if player goes out, calculate scores
-                // if score >= total to win -> player wins
-                // else deal again
+        System.out.println(currentPlayer.hand);
+
+        System.out.println(
+                "1. Meld\n" +
+                "2. Lay Off\n" +
+                "3. Discard\n"
+        );
+        userChoice = getIntRangeInput(1, 3);
+        switch (userChoice) {
+            case 1:
+                meldMenu();
+                break;
+            case 2:
+                layOffMenu();
+                break;
+            case 3:
+                discardMenu();
+        }
+    }
+
+    private void computerTurn() {
+
+    }
+    private void drawFromDiscard() {
+        currentPlayer.hand.addCard(discard.draw());
+    }
+
+    private void drawFromDeck() {
+        // refill the deck from the discard if it is empty
+        if (deck.isEmpty()){
+            discard.moveToDeck(deck);
+        }
+        currentPlayer.hand.addCard(deck.draw());
+    }
+
+    private void layOffMenu() {
+
+    }
+
+    private void meldMenu() {
+
+    }
+
+    private void discardMenu() {
+        int handSize = currentPlayer.hand.size();
+        System.out.printf("Enter the card you want to discard, 1 - %d\n", handSize);
+        int cardPosition = getIntRangeInput(1, handSize);
+        cardPosition -= 1;
+        discard.addCard(currentPlayer.hand.getCard(cardPosition));
+        currentPlayer.hand.removeCard(cardPosition);
+    }
+
+    private int getIntRangeInput(int firstInt, int lastInt) {
+        while (true) {
+            String input = scanner.nextLine();
+            try {
+                int inputInt = Integer.parseInt(input);
+                if (inputInt < firstInt || inputInt > lastInt) {
+                    System.out.println("Please enter a valid selection.");
+                    continue;
+                }
+                return inputInt;
+            } catch (NumberFormatException nfe) {
+                System.out.println("Please enter a number.");
+                continue;
+            }
         }
     }
 
 
-    private void playerTurn() {
-//        while (true) {
-            printBoard();
-            System.out.println("Draw a card from <S>tock or <D>iscard");
-            String choice = scanner.nextLine();
-//        }
-    }
-
     private void printBoard() {
-        System.out.println("#########################################");
+        System.out.println("\n#########################################");
 
-        System.out.printf("# SCORE       YOU: %-3d  COMPUTER: %-3d   #\n",
+        System.out.printf("# SCORE         YOU: %-3d  COMPUTER: %-3d\n",
                 players.get(0).getScore(), players.get(1).getScore()
         );
-        System.out.println("# ");
-        System.out.println("Hand: " + currentPlayer.getHand());
-        System.out.printf("Stock: X (%5d) Discard: %s (%d)\n", deck.size(), discard.peek().toString(), discard.size());
+        System.out.printf("# Stock: (%2d cards)  Discard: %s (%d)\n",
+                deck.size(), discard.peek().toString(), discard.size());
+        System.out.println("#########################################\n");
+
+        System.out.println("Hand:\n" + currentPlayer.getHand());
     }
 
     // set the current player to the next player in the list
@@ -117,9 +203,24 @@ public class RummyGame {
         }
     }
 
+    // add up the point values of every non-empty hand
+    private int calculatePoints() {
+        int points = 0;
+        for (Player player : players) {
+            if (!player.hand.isEmpty()){
+                points += player.hand.getPoints();
+            }
+        }
+        return points;
+    }
+
     private boolean gameWon() {
-        // TODO check players scores to see if one is more than max
-        // if more than one is above the winning score, pick one with highest score
+        for (Player player : players) {
+            // TODO hard coded max score should be moved outside so user can set it
+            if (player.getScore() >= 100) {
+                return true;
+            }
+        }
         return false;
     }
 

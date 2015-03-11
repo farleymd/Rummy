@@ -2,21 +2,19 @@ package Marty.company;
 
 public abstract class Player {
     private String name;
-    private int score;
+    private int score = 0;
     protected Hand hand;
 
     public Player(String name) {
         this.name = name;
     }
 
-    public abstract void drawCard();
-
     public int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
-        this.score = score;
+    public void addToScore(int score) {
+        this.score += score;
     }
 
     public Hand getHand() {

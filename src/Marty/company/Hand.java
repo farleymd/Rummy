@@ -19,19 +19,22 @@ public class Hand {
         return returnCard;
     }
 
+    public int getPoints() {
+        int points = 0;
+        for (Card card : cards) {
+            points += card.pointValue();
+        }
+        return points;
+    }
+
     // add a card to the hand
     public void addCard (Card newCard){
         cards.add(newCard);
     }
 
     // remove a card from the hand
-    public void removeCard (Card newCard){
-        cards.remove(newCard);
-    }
-
-    // create a new empty hand
-    public void newHand() {
-        cards = new ArrayList<Card>(10);
+    public void removeCard (int position){
+        cards.remove(position);
     }
 
     public boolean isEmpty(){

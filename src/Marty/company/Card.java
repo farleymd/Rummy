@@ -37,6 +37,17 @@ public class Card implements Comparable<Card> {
         return suitComp != 0 ? suitComp : this.rank - anotherCard.rank;
     }
 
+    // returns the point value for the card
+    // Ace is worth 1
+    // 2 - 10 is face value
+    // Jack, Queen, King are worth 10
+    public int pointValue() {
+        if (rank < 10) {
+            return rank + 1;
+        } else
+            return 10;
+    }
+
     // example: ♠J
     @Override
     public String toString() {
