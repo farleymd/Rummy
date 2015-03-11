@@ -8,8 +8,10 @@ public class RummyGame {
 
     private static Scanner scanner = new Scanner(System.in);
     private LinkedList<Player> players;
+    private Player currentPlayer;
     private Deck deck;
     private DiscardPile discard;
+
 
     public static void main(String[] args) {
         printBanner();
@@ -34,8 +36,9 @@ public class RummyGame {
 
     private void playGame() {
         players = new LinkedList<Player>();
-        players.push(new Player());
-        players.push(new Player());     // TODO make this a computer player
+        players.push(new Player("Player"));
+        players.push(new Player("Computer"));     // TODO make this a computer player
+        currentPlayer = players.peek();
 
         // TODO let use choose either the number of deals or points to win the game
         int maxScore = 500;
@@ -48,6 +51,7 @@ public class RummyGame {
             // deal the starting hands and start the discard pile
             deal(players);
             discard.addToDiscardPile(deck.drawFromDeck());
+
 
             // player needs to draw from the deck or discard
                 // if player draws from deck and it is empty, reverse discard pile and move to deck
@@ -64,10 +68,24 @@ public class RummyGame {
         }
     }
 
+    // deal the starting hand to each player
     private void deal(LinkedList<Player> players) {
         for (Player player : players) {
             Hand playerHand = player.getPlayerHand();
             playerHand.buildHand(deck);
+        }
+    }
+
+    // set the current player to the next player in the list
+    private void nextPlayer() {
+        // get the position of the current player
+        int playerPos = players.indexOf(currentPlayer);
+
+        // if the player is the last in the list, go back to the first player
+        if (playerPos == players.size() - 1) {
+            currentPlayer = players.getFirst();
+        } else {
+            currentPlayer = players.get(playerPos + 1);
         }
     }
 
