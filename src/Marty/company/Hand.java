@@ -127,7 +127,7 @@ public class Hand {
 
     }
 
-    public void checkForGroup() {
+    public void checkForGroup(String playerName) {
         ArrayList<Card> rankAce = new ArrayList<Card>();
         ArrayList<Card> rank2 = new ArrayList<Card>();
         ArrayList<Card> rank3 = new ArrayList<Card>();
@@ -150,7 +150,7 @@ public class Hand {
                 case 0:
                     rankAce.add(yp);
                     if (rankAce.size() == 3 || rankAce.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -158,7 +158,7 @@ public class Hand {
                 case 1:
                     rank2.add(yp);
                     if (rank2.size() == 3 || rank2.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -166,7 +166,7 @@ public class Hand {
                 case 2:
                     rank3.add(yp);
                     if (rank3.size() == 3 || rank3.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -174,7 +174,7 @@ public class Hand {
                 case 3:
                     rank4.add(yp);
                     if (rank4.size() == 3 || rank4.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -182,7 +182,7 @@ public class Hand {
                 case 4:
                     rank5.add(yp);
                     if (rank5.size() == 3 || rank5.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -190,7 +190,7 @@ public class Hand {
                 case 5:
                     rank6.add(yp);
                     if (rank6.size() == 3 || rank6.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -198,7 +198,7 @@ public class Hand {
                 case 6:
                     rank7.add(yp);
                     if (rank7.size() == 3 || rank7.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -206,7 +206,7 @@ public class Hand {
                 case 7:
                     rank8.add(yp);
                     if (rank8.size() == 3 || rank8.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -214,7 +214,7 @@ public class Hand {
                 case 8:
                     rank9.add(yp);
                     if (rank9.size() == 3 || rank9.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -222,7 +222,7 @@ public class Hand {
                 case 9:
                     rank10.add(yp);
                     if (rank10.size() == 3 || rank10.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -230,7 +230,7 @@ public class Hand {
                 case 10:
                     rankJack.add(yp);
                     if (rankJack.size() == 3 || rankJack.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -238,7 +238,7 @@ public class Hand {
                 case 11:
                     rankQueen.add(yp);
                     if (rankQueen.size() == 3 || rankQueen.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -246,7 +246,7 @@ public class Hand {
                 case 12:
                     rankKing.add(yp);
                     if (rankKing.size() == 3 || rankKing.size() == 4) {
-                        runTheGroup(yp);
+                        runTheGroup(yp, playerName);
                     } else {
                         continue;
                     }
@@ -255,17 +255,22 @@ public class Hand {
         }
     }
 
-    public void runTheGroup(Card yp){
+    public void runTheGroup(Card yp, String playerName){
         Scanner scanner = new Scanner(System.in);
         String[] ranks = yp.getRanks();
         int rank = yp.getRank();
         String rankString = ranks[rank];
-        System.out.println("You have a group of " + rankString + "s! Do you want to run the group? Y or N");
-        String playerAnswer = scanner.next();
-        if (playerAnswer.equalsIgnoreCase("Y")){
-            //TODO
-            return;
 
+        if (playerName.equalsIgnoreCase("humanPlayer")){
+            System.out.println("You have a group of " + rankString + "s! Do you want to run the group? Y or N");
+            String playerAnswer = scanner.next();
+            if (playerAnswer.equalsIgnoreCase("Y")){
+                //TODO
+                return;
+
+            }
+        } else {
+            String playerAnswer = "Y";
         }
     }
 }

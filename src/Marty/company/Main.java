@@ -44,7 +44,7 @@ public class Main {
 
             while (humanHandEmpty == false && computerHandEmpty == false){
             runHumanTurn(humanHand, newDeck, newDiscard, humanPlayer, computerPlayer);
-            runComputerTurn(computerHand, newDeck, newDiscard);
+            runComputerTurn(computerHand, newDeck, newDiscard, computerPlayer);
         }
     }
 
@@ -68,7 +68,7 @@ public class Main {
             playerHand.displayHand();
         }
 
-        playerHand.checkForGroup();
+        playerHand.checkForGroup("humanPlayer");
         playerHand.checkForRun();
 
         System.out.println("Which card would you like to discard? Type the number beside the card.");
@@ -79,8 +79,9 @@ public class Main {
         newDiscard.addToDiscardPile(playerDiscardCard);
     }
 
-    public static void runComputerTurn(Hand computerHand, Deck newDeck, DiscardPile newDiscard){
-        computerHand.checkForGroup();
+    public static void runComputerTurn(Hand computerHand, Deck newDeck, DiscardPile newDiscard,
+                                       Player computerPlayer){
+        computerHand.checkForGroup("computerPlayer");
         computerHand.checkForRun();
 
         Card playerDiscardCard = computerHand.getCard(3);
