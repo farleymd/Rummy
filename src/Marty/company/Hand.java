@@ -127,6 +127,7 @@ public class Hand {
 
     }
 
+    //tests if three or four cards are the same group
     public void checkForGroup(String playerName) {
         ArrayList<Card> rankAce = new ArrayList<Card>();
         ArrayList<Card> rank2 = new ArrayList<Card>();
@@ -255,6 +256,7 @@ public class Hand {
         }
     }
 
+    //ask the user if they want to attach the group to the meld
     public void runTheGroup(Card yp, String playerName){
         Scanner scanner = new Scanner(System.in);
         String[] ranks = yp.getRanks();
