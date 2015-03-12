@@ -92,6 +92,52 @@ public class Hand {
 
     public void checkForRun() {
 
+        // a list that holds lists of runs
+        ArrayList<ArrayList<Card>> runs = new ArrayList<ArrayList<Card>>();
+
+        for (int suit = 0; suit < 4; suit++) {
+
+            ArrayList<Card> possibleRun = new ArrayList<Card>();
+            possibleRun.clear();
+
+            for (Card card : handCard) {
+                // check if card is the suit we are looking for
+                if (card.getSuit() == suit) {
+                    // check if we have any possible runs started yet
+                    if (possibleRun.isEmpty()) {
+                        // we don't, start a new possible run and go to next card
+                        possibleRun.add(card);
+                        continue;
+                    }
+
+                    // we have a possible run started
+                    // check if the card rank's absolute difference from the previous card is not 1
+                    if (Math.abs(card.getRank() - possibleRun.get(possibleRun.size() - 1).getRank()) == 1) {
+                        // card is in sequence with the previous card
+                        possibleRun.add(card);
+                    } else {
+                        // card is not in sequence
+                        // check if current possible run is 3 or greater
+                        if (possibleRun.size() >= 3) {
+                            // we have a have a run! next card!
+                            runs.add(new ArrayList<Card>(possibleRun));
+                            possibleRun.clear();
+                            possibleRun.add(card);
+                            continue;
+                        } else {
+                            // no run, start a new possible run
+                            possibleRun.clear();
+                        }
+                    }
+                }
+            }
+
+            // if we are at the last card and have a run, add it
+            if (possibleRun.size() >= 3) {
+                runs.add(possibleRun);
+
+            }
+        }
     }
 
     public void checkForGroup() {
