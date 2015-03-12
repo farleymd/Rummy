@@ -91,6 +91,39 @@ public class Hand {
     }
 
     public void checkForRun() {
+        boolean isRun = false;
+        int numberOfCards = handCard.size();
+        if (numberOfCards < 3 || numberOfCards > 13) {
+            isRun = false;
+        }
+
+        // make sure cards are sorted
+        Collections.sort(handCard);
+
+        // compare all suits to the first card, and ranks starting with the first
+        int suitCompare = handCard.get(0).getSuit();
+        int previousRank = handCard.get(0).getRank();
+        for (int cardNum = 1; cardNum < numberOfCards; cardNum++) {
+            int thisSuit = handCard.get(cardNum).getSuit();
+            int thisRank = handCard.get(cardNum).getRank();
+
+            if (thisSuit != suitCompare) {
+                isRun = false;
+            }
+
+            if (Math.abs(thisRank - previousRank) != 1) {
+                isRun = false;
+            } else {
+                previousRank = thisRank;
+            }
+        }
+
+        // all tests passed
+        isRun = true;
+
+        if (isRun == true){
+
+        }
 
     }
 

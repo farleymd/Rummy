@@ -12,12 +12,12 @@ public class Deck {
 
     Deck()
     {
-        cards = new ArrayList<Card>();
-        for (int a= 0; a <= 3; a++)
+        this.cards = new ArrayList<Card>();
+        for (int suit= 0; suit <= 3; suit++)
         {
-            for (int b = 0; b <= 12; b++)
+            for (int rank = 0; rank <= 12; rank++)
             {
-                cards.add(new Card(b, a));
+                cards.add(new Card(rank, suit));
             }
         }
     }
@@ -35,5 +35,15 @@ public class Deck {
         Random generator = new Random();
         int index = generator.nextInt(cards.size());
         return cards.remove(index);
+    }
+
+    public boolean isEmpty() {
+        return cards.isEmpty();
+    }
+
+    public int getSize(){
+        int size = cards.size();
+
+        return size;
     }
 }

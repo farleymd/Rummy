@@ -7,8 +7,13 @@ public class Card implements Comparable<Card> {
 
     private int rank, suit;
 
-    private static String[] suits = {"hearts", "spades", "diamonds", "clubs"};
-    private static String[] ranks = {"Ace", "2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King"};
+    private static final char SPADE     = '\u2660';
+    private static final char CLUB      = '\u2663';
+    private static final char HEART     = '\u2665';
+    private static final char DIAMOND   = '\u2666';
+
+    private static char[] suits = {HEART, SPADE, DIAMOND, CLUB};
+    private static String[] ranks = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 
     public Card(int rank, int suit) {
         this.rank = rank;
@@ -23,18 +28,18 @@ public class Card implements Comparable<Card> {
         Card.ranks = ranks;
     }
 
-    public static String[] getSuits() {
+    public static char[] getSuits() {
         return suits;
     }
 
-    public static void setSuits(String[] suits) {
+    public static void setSuits(char[] suits) {
         Card.suits = suits;
     }
 
     public
     @Override
     String toString() {
-        return ranks[rank] + " of " + suits[suit];
+        return ranks[rank] + suits[suit];
     }
 
     public int getRank() {

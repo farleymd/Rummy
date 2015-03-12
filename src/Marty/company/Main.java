@@ -8,11 +8,15 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        printBanner();
         Player humanPlayer = new Player();
         Player computerPlayer = new Player();
-        Deck newDeck = new Deck();
-        DiscardPile newDiscard = new DiscardPile();
+        int humanScore = humanPlayer.getScore();
+        int computerScore = computerPlayer.getScore();
+
+        while (humanScore != 100 || computerScore != 100){
+            newGame(humanPlayer, computerPlayer);
+        }
 
 //        Hand testHand = new Hand();
 //        testHand.testBuild(newDeck);
@@ -20,27 +24,35 @@ public class Main {
 //
 //        testHand.checkForGroup();
 
-        Hand humanHand = humanPlayer.getPlayerHand();
-        humanHand.buildHand(newDeck);
+    }
 
-        Hand computerHand = computerPlayer.getPlayerHand();
-        computerHand.buildHand(newDeck);
+        public static void newGame(Player humanPlayer, Player computerPlayer){
+            Scanner scanner = new Scanner(System.in);
+            Deck newDeck = new Deck();
+            DiscardPile newDiscard = new DiscardPile();
 
-        newDiscard.displayDiscardFirstTime(newDeck);
+            Hand humanHand = humanPlayer.getPlayerHand();
+            humanHand.buildHand(newDeck);
 
-        boolean humanHandEmpty = humanHand.notEmpty();
-        boolean computerHandEmpty = computerHand.notEmpty();
+            Hand computerHand = computerPlayer.getPlayerHand();
+            computerHand.buildHand(newDeck);
 
-        while (humanHandEmpty == false && computerHandEmpty == false){
-            runHumanTurn(humanHand, newDeck, newDiscard);
+            newDiscard.displayDiscardFirstTime(newDeck);
+
+            boolean humanHandEmpty = humanHand.notEmpty();
+            boolean computerHandEmpty = computerHand.notEmpty();
+
+            while (humanHandEmpty == false && computerHandEmpty == false){
+            runHumanTurn(humanHand, newDeck, newDiscard, humanPlayer, computerPlayer);
             runComputerTurn(computerHand, newDeck, newDiscard);
         }
     }
 
-    public static void runHumanTurn(Hand playerHand, Deck newDeck, DiscardPile newDiscard){
+    public static void runHumanTurn(Hand playerHand, Deck newDeck, DiscardPile newDiscard, Player humanPlayer,
+                                    Player computerPlayer){
         Scanner scanner = new Scanner(System.in);
+        printBoard(newDeck, newDiscard, humanPlayer, computerPlayer);
         playerHand.displayHand();
-        newDiscard.displayDiscard(newDeck);
         //Player draw
         System.out.println("Would you like to draw from the deck or the discard pile?");
         String userDraw = scanner.next();
@@ -77,6 +89,52 @@ public class Main {
         newDiscard.addToDiscardPile(playerDiscardCard);
 
     }
+
+    public static void printBanner(){
+        System.out.println(
+                        " ______    __   __  __   __  __   __  __   __ \n" +
+                        "|    _ |  |  | |  ||  |_|  ||  |_|  ||  | |  |\n" +
+                        "|   | ||  |  | |  ||       ||       ||  |_|  |\n" +
+                        "|   |_||_ |  |_|  ||       ||       ||       |\n" +
+                        "|    __  ||       ||       ||       ||_     _|\n" +
+                        "|   |  | ||       || ||_|| || ||_|| |  |   |  \n" +
+                        "|___|  |_||_______||_|   |_||_|   |_|  |___|  \n" +
+                        "\n" +
+                        "written by       Marty Farley and Mason Elmore\n"
+        );
+        System.out.println("The first player to hit 100 points wins the game." + "\n");
+    }
+
+    private static void printBoard(Deck newDeck, DiscardPile newDiscard,
+                                   Player humanPlayer, Player computerPlayer) {
+        // make sure we aren't trying to get the size of an empty deck or discard pile
+        int deckSize = 0;
+        int discardSize = 0;
+
+        if (!newDeck.isEmpty()) {
+            deckSize = newDeck.getSize();
+        }
+        if (!newDiscard.isEmpty()) {
+            discardSize = newDiscard.getSize();
+        }
+
+        System.out.println("\n#########################################");
+        System.out.printf("# SCORE         YOU: %-3d  COMPUTER: %-3d\n",
+                humanPlayer.getScore(), computerPlayer.getScore()
+        );
+        System.out.printf("# Stock: (%2d cards)  Discard: (%d)\n",
+                deckSize, discardSize
+        );
+        newDiscard.displayDiscard(newDeck);
+        System.out.println("#########################################\n");
+        //printMelds();
+        System.out.println();
+        //printHand();
+
+    }
+
+
+
 
 }
 

@@ -38,4 +38,14 @@ public class DiscardPile {
         discardPile.add(playerDiscardCard);
         return;
     }
+
+    public boolean isEmpty() {
+
+        return discardPile.isEmpty();
+    }
+
+    public int getSize(){
+        int size = discardPile.size();
+        return size;
+    }
 }
