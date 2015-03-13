@@ -30,9 +30,9 @@ public class Main {
             Meld meldDesktop = new Meld();
 
             Hand humanHand = humanPlayer.getPlayerHand();
-            //humanHand.buildHand(newDeck);
+            humanHand.buildHand(newDeck);
             //TODO test build
-            humanHand.testBuild(newDeck);
+            //humanHand.testBuild(newDeck);
 
             Hand computerHand = computerPlayer.getPlayerHand();
             computerHand.buildHand(newDeck);
@@ -70,7 +70,7 @@ public class Main {
         }
 
         playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand, humanPlayer);
-        playerHand.checkForRun();
+        playerHand.checkForRun("humanPlayer",meldDesktop, playerHand, humanPlayer);
 
         boolean noMelds = meldDesktop.meldDesktopIsEmpty(); //are there any melds on the board?
 
@@ -78,7 +78,6 @@ public class Main {
             System.out.println(ANSI_black + "Would you like to meld an individual card? Y or N");
             String userAnswer = scanner.next();
 
-            //TODO ask player if they want to meld an individual card
             if (userAnswer.equalsIgnoreCase("Y")){
                 System.out.println(ANSI_black + "What card would you like to meld?");
                 int meldCardChoice = scanner.nextInt();
@@ -107,8 +106,9 @@ public class Main {
     public static void runComputerTurn(Hand computerHand, Deck newDeck, DiscardPile newDiscard,
                                        Player computerPlayer, Meld meldDesktop){
         computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand, computerPlayer);
-        computerHand.checkForRun();
+        computerHand.checkForRun("computerPlayer",meldDesktop, computerHand, computerPlayer);
 
+        //TODO make computer less stupid about discard
         Random generator = new Random();
         int index = generator.nextInt(computerHand.getSize(computerHand));
 

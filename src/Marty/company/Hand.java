@@ -55,13 +55,13 @@ public class Hand {
         Card card6 = new Card(1,1);
         handCard.add(card6);
 
-        Card card7 = new Card(4,3);
+        Card card7 = new Card(12,3);
         handCard.add(card7);
 
-        Card card8 = new Card(10,3);
+        Card card8 = new Card(11,3);
         handCard.add(card8);
 
-        Card card9 = new Card(8,3);
+        Card card9 = new Card(10,3);
         handCard.add(card9);
 
         return handCard;
@@ -97,12 +97,14 @@ public class Hand {
         return empty;
     }
 
-    public void checkForRun() {
+    public void checkForRun(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
+        Scanner scanner = new Scanner(System.in);
         boolean isRun = false;
         int numberOfCards = handCard.size();
         if (numberOfCards < 3 || numberOfCards > 13) {
             isRun = false;
         }
+        ArrayList<Card> cardRun = new ArrayList<Card>();
 
         // make sure cards are sorted
         Collections.sort(handCard);
@@ -121,17 +123,60 @@ public class Hand {
             if (Math.abs(thisRank - previousRank) != 1) {
                 isRun = false;
             } else {
+                if (cardRun.size() == 0) {
+                    Card firstCard = new Card(handCard.get(0).getRank(), suitCompare = handCard.get(0).getSuit());
+                    cardRun.add(firstCard);
+                }
+
+                Card addCard = new Card(thisRank, thisSuit);
+                cardRun.add(addCard);
                 previousRank = thisRank;
+
+                if (cardRun.size()>= 3){
+                    if (playerName.equalsIgnoreCase("humanPlayer")){
+                        System.out.println("You have a run! Would you like to meld the run?");
+                        String userAnswer = scanner.next();
+
+                        if (userAnswer.equalsIgnoreCase("Y")){
+                            meldDesktop.addMeldRun(cardRun);
+
+                            //after adding the run to the meld desktop, remove them from the player's
+                            //hand and get points
+                            Iterator<Card> testRoll = cardRun.iterator();
+                            while (testRoll.hasNext()){
+                                int points = 0;
+                                Card removeCard = testRoll.next();
+                                playerHand.removeCard(removeCard);
+                                points = removeCard.pointValue() + points;
+                                player.setScore(points);
+                            }
+
+                            //display the card desktop
+                            meldDesktop.printMelds();
+                            playerHand.displayHand();
+                        }
+                    }else{
+                        meldDesktop.addMeldRun(cardRun);
+
+                        Iterator<Card> testRoll = cardRun.iterator();
+                        while (testRoll.hasNext()){
+                            int points = 0;
+                            Card removeCard = testRoll.next();
+                            playerHand.removeCard(removeCard);
+                            points = removeCard.pointValue() + points;
+                            player.setScore(points);
+                        }
+
+                        //display the card desktop
+                        meldDesktop.printMelds();
+                        playerHand.displayHand();
+                    }
+
+                }
             }
         }
 
         // all tests passed
-        isRun = true;
-
-        if (isRun == true){
-
-        }
-
     }
 
     //tests if three or four cards are the same group

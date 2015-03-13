@@ -23,8 +23,9 @@ public class Meld {
         return;
     }
 
-    public void addMeldRun(){
-
+    public void addMeldRun(ArrayList runToAdd){
+        meldDesktop.add(runToAdd);
+        return;
     }
 
     //ask the user if they want to attach the group to the meld
@@ -36,7 +37,7 @@ public class Meld {
         String rankString = ranks[rank];
 
         if (playerName.equalsIgnoreCase("humanPlayer")){
-            System.out.println("You have a group of " + rankString + "s! Do you want to run the group? Y or N");
+            System.out.println("You have a group of " + rankString + "s! Do you want to meld the group? Y or N");
             String playerAnswer = scanner.next();
             if (playerAnswer.equalsIgnoreCase("Y")){
                 meldDesktop.addMeldGroup(groupToAdd);
