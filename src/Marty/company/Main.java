@@ -73,8 +73,26 @@ public class Main {
         playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand, humanPlayer);
         playerHand.checkForRun();
 
-        //TODO ask player if they want to meld an individual card
+        boolean noMelds = meldDesktop.meldDesktopIsEmpty(); //are there any melds on the board?
 
+        if (noMelds== false){
+            System.out.println("Would you like to meld an individual card? Y or N");
+            String userAnswer = scanner.next();
+
+            if (userAnswer.equalsIgnoreCase("Y")){
+                System.out.println("What card would you like to meld?");
+                int meldCardChoice = scanner.nextInt();
+                System.out.println("Which meld would you like to add the card to?");
+                int meldChoice = scanner.nextInt();
+
+                Card meldCard = playerHand.getCard(meldCardChoice);
+
+                meldDesktop.addIndividualCard(meldCard, meldChoice);
+
+            }
+            //TODO ask player if they want to meld an individual card
+
+        }
         System.out.println(ANSI_black + "Which card would you like to discard? Type the number beside the card.");
         int playerDiscardChoice = scanner.nextInt();
         Card playerDiscardCard = playerHand.getCard(playerDiscardChoice-1);

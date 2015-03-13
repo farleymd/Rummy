@@ -25,14 +25,6 @@ public class Meld {
 
     }
 
-    public void printMelds(){
-        System.out.println("# Melds: ");
-        for (int i = 0; i < meldDesktop.size(); i++){
-            int identifier = i+1;
-            System.out.print( identifier + meldDesktop.get(i).toString() + "\n");
-        }
-    }
-
     //ask the user if they want to attach the group to the meld
     public void runTheGroup(Card yp, String playerName, ArrayList groupToAdd,
                             Meld meldDesktop, Hand playerHand, Player player){
@@ -73,6 +65,36 @@ public class Meld {
                 points = removeCard.pointValue() + points;
                 player.setScore(points);
             }
+        }
+    }
+
+    public void addIndividualCard(Card meldCard, int arrayIndex){
+
+        //TODO double check card belongs to meld. 
+
+        meldDesktop.get(arrayIndex).add(meldCard);
+
+        //get the card
+        //get the index of the meldArray
+        //add the card to that array
+
+    }
+
+    public boolean meldDesktopIsEmpty(){
+        boolean isEmpty = false;
+
+        if (meldDesktop.size() == 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void printMelds(){
+        System.out.println("# Melds: ");
+        for (int i = 0; i < meldDesktop.size(); i++){
+            int identifier = i+1;
+            System.out.print( identifier + meldDesktop.get(i).toString() + "\n");
         }
     }
 
