@@ -64,7 +64,9 @@ public class RummyGame {
             }
 
             // start the discard pile
-            discard.addCard(deck.deal());
+            while (!deck.isEmpty()) {
+                discard.addCard(deck.deal());
+            }
 
             // players take turns until one runs out of cards
             while (true) {
@@ -102,6 +104,7 @@ public class RummyGame {
                 if (deck.isEmpty()){
                     discard.flipOver();
                     deck = new Deck(discard);
+                    discard = new DiscardPile();
                 }
                 currentPlayer.drawCard(deck);
                 break;

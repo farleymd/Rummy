@@ -18,9 +18,12 @@ public class Deck extends CardPile {
         Collections.shuffle(cards);
     }
 
-    // creates a deck with cards from another CardPile
-    // mainly used for refilling the deck from the discard pile
-    public Deck(CardPile discardPile) {
-        this.cards = discardPile.cards;
+    // add all the cards from the discard pile to the deck
+    public Deck(DiscardPile discardPile) {
+        if (!this.cards.isEmpty()) {
+            throw new IllegalStateException("Deck(DiscardPile discardPile) called when the Deck is not empty.");
+        }
+
+        this.cards.addAll(discardPile.cards);
     }
 }
