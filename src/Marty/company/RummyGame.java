@@ -55,20 +55,17 @@ public class RummyGame {
         while (!gameWon()) {
             // initialize the deck and discard pile
             deck = new Deck();
-            deck.shuffle();
+//            deck.shuffle();
             discard = new DiscardPile();
             melds = new ArrayList<Meld>();
 
             // deal starting hand to each player
             for (Player player : players) {
-                player.newHand();
-                for (int i = 0; i < handSize; i++) {
-                    player.hand.addCard(deck.draw());
-                }
+                player.dealHand(deck, handSize);
             }
 
             // start the discard pile
-            discard.addCard(deck.draw());
+            discard.addCard(deck.deal());
 
             // players take turns until one runs out of cards
             while (true) {
@@ -104,7 +101,7 @@ public class RummyGame {
                 drawFromDeck();
                 break;
             case 2:
-                discardDrawnThisTurn = discard.getTopCard();
+                discardDrawnThisTurn = discard.topCard();
                 drawFromDiscard();
                 break;
         }
@@ -147,15 +144,16 @@ public class RummyGame {
     }
 
     private void drawFromDiscard() {
-        currentPlayer.hand.addCard(discard.draw());
+        currentPlayer.hand.addCard(discard.deal());
     }
 
     private void drawFromDeck() {
         // refill the deck from the discard if it is empty
         if (deck.isEmpty()){
-            discard.moveToDeck(deck);
+            discard.flipOver();
+            deck = new Deck(discard);
         }
-        currentPlayer.hand.addCard(deck.draw());
+        currentPlayer.hand.addCard(deck.deal());
     }
 
     private boolean meldMenu() {
@@ -284,7 +282,7 @@ public class RummyGame {
             deckSize = deck.size();
         }
         if (!discard.isEmpty()) {
-            discardStr = discard.getTopCard().toString();
+            discardStr = discard.topCard().toString();
             discardSize = discard.size();
         }
 
