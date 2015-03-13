@@ -69,7 +69,7 @@ public class Main {
             playerHand.displayHand();
         }
 
-        playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand);
+        playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand, humanPlayer);
         playerHand.checkForRun();
 
         System.out.println("Which card would you like to discard? Type the number beside the card.");
@@ -82,7 +82,7 @@ public class Main {
 
     public static void runComputerTurn(Hand computerHand, Deck newDeck, DiscardPile newDiscard,
                                        Player computerPlayer, Meld meldDesktop){
-        computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand);
+        computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand, computerPlayer);
         computerHand.checkForRun();
 
         Card playerDiscardCard = computerHand.getCard(3);

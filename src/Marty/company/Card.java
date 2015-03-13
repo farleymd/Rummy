@@ -51,6 +51,14 @@ public class Card implements Comparable<Card> {
         return suit;
     }
 
+    // Point value for the card
+    public int pointValue() {
+        if (rank < 10) {
+            return rank + 1;
+        } else
+            return 10;
+    }
+
     public int compareTo(Card anotherCard) {
 
         if (this.rank < anotherCard.getRank()) {

@@ -22,7 +22,7 @@ public class Meld {
     }
 
     public void addMeldRun(){
-        
+
     }
 
     public void printMelds(){
@@ -35,7 +35,7 @@ public class Meld {
 
     //ask the user if they want to attach the group to the meld
     public void runTheGroup(Card yp, String playerName, ArrayList groupToAdd,
-                            Meld meldDesktop, Hand playerHand){
+                            Meld meldDesktop, Hand playerHand, Player player){
         Scanner scanner = new Scanner(System.in);
         String[] ranks = yp.getRanks();
         int rank = yp.getRank();
@@ -51,8 +51,11 @@ public class Meld {
                 //remove the cards from the player's hand
                 Iterator<Card> testRoll = groupToAdd.iterator();
                 while (testRoll.hasNext()){
+                    int points = 0;
                     Card removeCard = testRoll.next();
                     playerHand.removeCard(removeCard);
+                    points = removeCard.pointValue() + points;
+                    player.setScore(points);
                 }
 
                 //display the card desktop
@@ -60,7 +63,15 @@ public class Meld {
             }
         } else {
             meldDesktop.addMeldGroup(groupToAdd);
-            return;
+
+            Iterator<Card> testRoll = groupToAdd.iterator();
+            while (testRoll.hasNext()){
+                int points = 0;
+                Card removeCard = testRoll.next();
+                playerHand.removeCard(removeCard);
+                points = removeCard.pointValue() + points;
+                player.setScore(points);
+            }
         }
     }
 

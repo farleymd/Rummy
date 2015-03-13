@@ -11,8 +11,9 @@ public class Player {
         return Score;
     }
 
-    public void setScore(int score) {
-        Score = score;
+    public void setScore(int points) {
+
+        Score = Score + points;
     }
 
     public Hand getPlayerHand() {

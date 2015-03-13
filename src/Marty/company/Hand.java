@@ -128,7 +128,7 @@ public class Hand {
     }
 
     //tests if three or four cards are the same group
-    public void checkForGroup(String playerName, Meld meldDesktop, Hand playerHand) {
+    public void checkForGroup(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
         ArrayList<Card> rankAce = new ArrayList<Card>();
         ArrayList<Card> rank2 = new ArrayList<Card>();
         ArrayList<Card> rank3 = new ArrayList<Card>();
@@ -152,7 +152,7 @@ public class Hand {
                 case 0:
                     rankAce.add(yp);
                     if (rankAce.size() == 4 || rankAce.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rankAce, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rankAce, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -161,7 +161,7 @@ public class Hand {
                 case 1:
                     rank2.add(yp);
                     if (rank2.size() == 4 || rank2.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank2, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank2, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -170,7 +170,7 @@ public class Hand {
                 case 2:
                     rank3.add(yp);
                     if (rank3.size() == 4 || rank3.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank3, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank3, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -179,7 +179,7 @@ public class Hand {
                 case 3:
                     rank4.add(yp);
                     if (rank4.size() == 4 || rank4.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank4, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank4, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -188,7 +188,7 @@ public class Hand {
                 case 4:
                     rank5.add(yp);
                     if (rank5.size() == 4 || rank5.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank5, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank5, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -197,7 +197,7 @@ public class Hand {
                 case 5:
                     rank6.add(yp);
                     if (rank6.size() == 4 || rank6.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank6, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank6, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -206,7 +206,7 @@ public class Hand {
                 case 6:
                     rank7.add(yp);
                     if (rank7.size() == 4 || rank7.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank7, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank7, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -215,7 +215,7 @@ public class Hand {
                 case 7:
                     rank8.add(yp);
                     if (rank8.size() == 4 || rank8.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank8, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank8, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -224,7 +224,7 @@ public class Hand {
                 case 8:
                     rank9.add(yp);
                     if (rank9.size() == 4 || rank9.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank9, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank9, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -233,7 +233,7 @@ public class Hand {
                 case 9:
                     rank10.add(yp);
                     if (rank10.size() == 4 || rank10.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rank10, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rank10, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -242,7 +242,7 @@ public class Hand {
                 case 10:
                     rankJack.add(yp);
                     if (rankJack.size() == 4 || rankJack.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rankJack, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rankJack, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -251,7 +251,7 @@ public class Hand {
                 case 11:
                     rankQueen.add(yp);
                     if (rankQueen.size() == 4 || rankQueen.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rankQueen, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rankQueen, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
@@ -260,7 +260,7 @@ public class Hand {
                 case 12:
                     rankKing.add(yp);
                     if (rankKing.size() == 4 || rankKing.size() == 3) {
-                        meldDesktop.runTheGroup(yp, playerName, rankKing, meldDesktop, playerHand);
+                        meldDesktop.runTheGroup(yp, playerName, rankKing, meldDesktop, playerHand, player);
                         found = true;
                     } else {
                         continue;
