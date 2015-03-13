@@ -1,9 +1,6 @@
 package Marty.company;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -33,7 +30,9 @@ public class Main {
             Meld meldDesktop = new Meld();
 
             Hand humanHand = humanPlayer.getPlayerHand();
-            humanHand.buildHand(newDeck);
+            //humanHand.buildHand(newDeck);
+            //TODO test build
+            humanHand.testBuild(newDeck);
 
             Hand computerHand = computerPlayer.getPlayerHand();
             computerHand.buildHand(newDeck);
@@ -76,21 +75,25 @@ public class Main {
         boolean noMelds = meldDesktop.meldDesktopIsEmpty(); //are there any melds on the board?
 
         if (noMelds== false){
-            System.out.println("Would you like to meld an individual card? Y or N");
+            System.out.println(ANSI_black + "Would you like to meld an individual card? Y or N");
             String userAnswer = scanner.next();
 
+            //TODO ask player if they want to meld an individual card
             if (userAnswer.equalsIgnoreCase("Y")){
-                System.out.println("What card would you like to meld?");
+                System.out.println(ANSI_black + "What card would you like to meld?");
                 int meldCardChoice = scanner.nextInt();
-                System.out.println("Which meld would you like to add the card to?");
+                meldCardChoice = meldCardChoice - 1;
+
+                System.out.println(ANSI_black + "Which meld would you like to add the card to?");
                 int meldChoice = scanner.nextInt();
+                meldChoice = meldChoice - 1;
+
 
                 Card meldCard = playerHand.getCard(meldCardChoice);
 
-                meldDesktop.addIndividualCard(meldCard, meldChoice);
+                meldDesktop.addIndividualCard(meldCard, meldChoice, playerHand, humanPlayer);
 
             }
-            //TODO ask player if they want to meld an individual card
 
         }
         System.out.println(ANSI_black + "Which card would you like to discard? Type the number beside the card.");
@@ -106,7 +109,10 @@ public class Main {
         computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand, computerPlayer);
         computerHand.checkForRun();
 
-        Card playerDiscardCard = computerHand.getCard(3);
+        Random generator = new Random();
+        int index = generator.nextInt(computerHand.getSize(computerHand));
+
+        Card playerDiscardCard = computerHand.getCard(index);
         computerHand.removeCard(playerDiscardCard);
 
         newDiscard.addToDiscardPile(playerDiscardCard);

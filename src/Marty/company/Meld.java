@@ -11,8 +11,10 @@ public class Meld {
 
     //collection of the group and run arrays as if displayed on a desktop
     private ArrayList<ArrayList<Card>> meldDesktop;
+    private String ANSI_black = "\u001B[30m";
 
     public Meld() {
+
         this.meldDesktop = new ArrayList<ArrayList<Card>>();
     }
 
@@ -68,16 +70,34 @@ public class Meld {
         }
     }
 
-    public void addIndividualCard(Card meldCard, int arrayIndex){
+    public void addIndividualCard(Card meldCard, int arrayIndex, Hand playerHand, Player player) {
+        int points = 0;
+        ArrayList<Card> groupCheck = new ArrayList<Card>();
+        groupCheck = meldDesktop.get(arrayIndex);
 
-        //TODO double check card belongs to meld. 
 
-        meldDesktop.get(arrayIndex).add(meldCard);
+        //check if card belongs to the selected group
+        Iterator<Card> groupChecker =groupCheck.iterator();
+        boolean found = true;    //way to break out of iteration
+        while (groupChecker.hasNext() && found == true) {
+            Card groupCheckCard = groupChecker.next();
+            int cardRank = meldCard.getRank();
+            int groupRank = groupCheckCard.getRank();
 
-        //get the card
-        //get the index of the meldArray
-        //add the card to that array
+            if (cardRank == groupRank) {  //rank of the card matches rank within the selected group
+                //add the card to the meld
+                meldDesktop.get(arrayIndex).add(meldCard);
+                //remove individual card from player's hand, get points for it
+                playerHand.removeCard(meldCard);
+                points = meldCard.pointValue() + points;
+                player.setScore(points);
 
+                found = false;
+            }else {
+                System.out.println(ANSI_black + "That card cannot be melded to that group.");
+                found = false;
+            }
+        }
     }
 
     public boolean meldDesktopIsEmpty(){
@@ -94,7 +114,7 @@ public class Meld {
         System.out.println("# Melds: ");
         for (int i = 0; i < meldDesktop.size(); i++){
             int identifier = i+1;
-            System.out.print( identifier + meldDesktop.get(i).toString() + "\n");
+            System.out.print(ANSI_black + identifier + ". " + meldDesktop.get(i).toString() + "\n");
         }
     }
 

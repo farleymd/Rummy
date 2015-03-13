@@ -31,6 +31,11 @@ public class Hand {
         return handCard;
     }
 
+    public int getSize(Hand playerHand){
+        int size = handCard.size();
+        return size;
+    }
+
     public ArrayList testBuild(Deck deck){
         Card card1 = new Card(0,0);
         handCard.add(card1);
