@@ -52,10 +52,11 @@ public class Main {
     public static void runHumanTurn(Hand playerHand, Deck newDeck, DiscardPile newDiscard, Player humanPlayer,
                                     Player computerPlayer, Meld meldDesktop){
         Scanner scanner = new Scanner(System.in);
+        String ANSI_black = "\u001B[30m";
         printBoard(newDeck, newDiscard, humanPlayer, computerPlayer, meldDesktop);
         playerHand.displayHand();
         //Player draw
-        System.out.println("Would you like to draw from the deck or the discard pile?");
+        System.out.println(ANSI_black + "Would you like to draw from the deck or the discard pile?");
         String userDraw = scanner.next();
 
         if (userDraw.equalsIgnoreCase("Deck")){
@@ -72,7 +73,9 @@ public class Main {
         playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand, humanPlayer);
         playerHand.checkForRun();
 
-        System.out.println("Which card would you like to discard? Type the number beside the card.");
+        //TODO ask player if they want to meld an individual card
+
+        System.out.println(ANSI_black + "Which card would you like to discard? Type the number beside the card.");
         int playerDiscardChoice = scanner.nextInt();
         Card playerDiscardCard = playerHand.getCard(playerDiscardChoice-1);
         playerHand.removeCard(playerDiscardCard);
@@ -111,6 +114,7 @@ public class Main {
                                    Player humanPlayer, Player computerPlayer,
                                    Meld meldDesktop) {
         // make sure we aren't trying to get the size of an empty deck or discard pile
+        String ANSI_black = "\u001B[30m";
         int deckSize = 0;
         int discardSize = 0;
 
@@ -121,7 +125,7 @@ public class Main {
             discardSize = newDiscard.getSize();
         }
 
-        System.out.println("\n#########################################");
+        System.out.println(ANSI_black + "\n#########################################");
         System.out.printf("# SCORE         YOU: %-3d  COMPUTER: %-3d\n",
                 humanPlayer.getScore(), computerPlayer.getScore()
         );

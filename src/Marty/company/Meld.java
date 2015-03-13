@@ -60,6 +60,7 @@ public class Meld {
 
                 //display the card desktop
                 meldDesktop.printMelds();
+                playerHand.displayHand();
             }
         } else {
             meldDesktop.addMeldGroup(groupToAdd);

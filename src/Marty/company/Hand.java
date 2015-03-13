@@ -7,6 +7,8 @@ import java.util.*;
  */
 public class Hand {
     private ArrayList<Card> handCard = new ArrayList<Card>(10);
+    private String ANSI_red = "\u001B[35m";
+    private String ANSI_black = "\u001B[30m";
 
 //    public Hand(ArrayList<Card> handCard) {
 //        this.handCard = handCard;
@@ -74,7 +76,7 @@ public class Hand {
         Collections.sort(handCard);
         for (int i = 0; i < handCard.size(); i++){
             int identifier = i+1;
-            System.out.print(identifier + ". " + handCard.get(i).toString() + " ");
+            System.out.print(ANSI_black + identifier + ". " + ANSI_red + handCard.get(i).toString() + " ");
         }
         System.out.println("\n");
     }
