@@ -55,7 +55,6 @@ public class RummyGame {
         while (!gameWon()) {
             // initialize the deck and discard pile
             deck = new Deck();
-//            deck.shuffle();
             discard = new DiscardPile();
             melds = new ArrayList<Meld>();
 
@@ -98,11 +97,16 @@ public class RummyGame {
         int userChoice = getIntRangeInput(1, 2);
         switch (userChoice) {
             case 1:
-                drawFromDeck();
+                // refill the deck from the discard if it is empty
+                if (deck.isEmpty()){
+                    discard.flipOver();
+                    deck = new Deck(discard);
+                }
+                currentPlayer.drawCard(deck);
                 break;
             case 2:
                 discardDrawnThisTurn = discard.topCard();
-                drawFromDiscard();
+                currentPlayer.drawCard(discard);
                 break;
         }
 
@@ -141,19 +145,6 @@ public class RummyGame {
 
     private void computerTurn() {
 
-    }
-
-    private void drawFromDiscard() {
-        currentPlayer.hand.addCard(discard.deal());
-    }
-
-    private void drawFromDeck() {
-        // refill the deck from the discard if it is empty
-        if (deck.isEmpty()){
-            discard.flipOver();
-            deck = new Deck(discard);
-        }
-        currentPlayer.hand.addCard(deck.deal());
     }
 
     private boolean meldMenu() {
@@ -312,7 +303,7 @@ public class RummyGame {
     }
 
     private void printHand() {
-        System.out.println("Hand: " + currentPlayer.getHand());
+        System.out.println("Hand: " + currentPlayer.hand);
     }
 
     // set the current player to the next player in the list
