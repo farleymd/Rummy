@@ -30,6 +30,7 @@ public class Main {
             Scanner scanner = new Scanner(System.in);
             Deck newDeck = new Deck();
             DiscardPile newDiscard = new DiscardPile();
+            Meld meldDesktop = new Meld();
 
             Hand humanHand = humanPlayer.getPlayerHand();
             humanHand.buildHand(newDeck);
@@ -43,15 +44,15 @@ public class Main {
             boolean computerHandEmpty = computerHand.notEmpty();
 
             while (humanHandEmpty == false && computerHandEmpty == false){
-            runHumanTurn(humanHand, newDeck, newDiscard, humanPlayer, computerPlayer);
-            runComputerTurn(computerHand, newDeck, newDiscard, computerPlayer);
+            runHumanTurn(humanHand, newDeck, newDiscard, humanPlayer, computerPlayer, meldDesktop);
+            runComputerTurn(computerHand, newDeck, newDiscard, computerPlayer, meldDesktop);
         }
     }
 
     public static void runHumanTurn(Hand playerHand, Deck newDeck, DiscardPile newDiscard, Player humanPlayer,
-                                    Player computerPlayer){
+                                    Player computerPlayer, Meld meldDesktop){
         Scanner scanner = new Scanner(System.in);
-        printBoard(newDeck, newDiscard, humanPlayer, computerPlayer);
+        printBoard(newDeck, newDiscard, humanPlayer, computerPlayer, meldDesktop);
         playerHand.displayHand();
         //Player draw
         System.out.println("Would you like to draw from the deck or the discard pile?");
@@ -68,7 +69,7 @@ public class Main {
             playerHand.displayHand();
         }
 
-        playerHand.checkForGroup("humanPlayer");
+        playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand);
         playerHand.checkForRun();
 
         System.out.println("Which card would you like to discard? Type the number beside the card.");
@@ -80,8 +81,8 @@ public class Main {
     }
 
     public static void runComputerTurn(Hand computerHand, Deck newDeck, DiscardPile newDiscard,
-                                       Player computerPlayer){
-        computerHand.checkForGroup("computerPlayer");
+                                       Player computerPlayer, Meld meldDesktop){
+        computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand);
         computerHand.checkForRun();
 
         Card playerDiscardCard = computerHand.getCard(3);
@@ -107,7 +108,8 @@ public class Main {
     }
 
     private static void printBoard(Deck newDeck, DiscardPile newDiscard,
-                                   Player humanPlayer, Player computerPlayer) {
+                                   Player humanPlayer, Player computerPlayer,
+                                   Meld meldDesktop) {
         // make sure we aren't trying to get the size of an empty deck or discard pile
         int deckSize = 0;
         int discardSize = 0;
@@ -127,8 +129,8 @@ public class Main {
                 deckSize, discardSize
         );
         newDiscard.displayDiscard(newDeck);
+        meldDesktop.printMelds();
         System.out.println("#########################################\n");
-        //printMelds();
         System.out.println();
         //printHand();
 
