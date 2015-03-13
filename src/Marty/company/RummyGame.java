@@ -86,15 +86,16 @@ public class RummyGame {
     private void humanTurn() {
         printBoard();
 
-        // track the card from the discard pile so they player cant put it back
-        Card discardDrawnThisTurn = null;   // TODO kind of messy, need to clean
-
         System.out.print(
                 "Draw a card from\n" +
                         "1. Deck\n" +
                         "2. Discard\n"
         );
         int userChoice = getIntRangeInput(1, 2);
+
+        // track the card from the discard pile so they player cant put it back
+        Card cardFromDiscard = null;
+
         switch (userChoice) {
             case 1:
                 // refill the deck from the discard if it is empty
@@ -105,40 +106,42 @@ public class RummyGame {
                 currentPlayer.drawCard(deck);
                 break;
             case 2:
-                discardDrawnThisTurn = discard.topCard();
+                cardFromDiscard = discard.topCard();
                 currentPlayer.drawCard(discard);
                 break;
         }
 
         // player can only meld once and must discard before their turn is over
-        boolean hasMeldedThisTurn = false;
-        boolean hasDiscardedThis = false;
+        boolean hasMelded = false;
+        boolean hasDiscarded = false;
 
-        while (!hasDiscardedThis){
+        while (!hasDiscarded){
             printBoard();
+
             System.out.println(
                     "1. Meld\n" +
-                            "2. Lay Off\n" +
-                            "3. Discard\n"
+                    "2. Lay Off\n" +
+                    "3. Discard\n"
             );
             userChoice = getIntRangeInput(1, 3);
+
             switch (userChoice) {
                 case 1:
-                    if (hasMeldedThisTurn) {
+                    if (hasMelded) {
                         System.out.println("You can only meld once per turn.");
                         break;
                     }
-                    hasMeldedThisTurn = meldMenu();
+                    hasMelded = meldMenu();
                     break;
                 case 2:
-                    // can't lay off if there no melds
                     if (melds.isEmpty()) {
+                        System.out.println("No melds to lay off cards to.");
                         break;
                     }
                     layOffMenu();
                     break;
                 case 3:
-                    hasDiscardedThis = discardMenu(discardDrawnThisTurn);
+                    hasDiscarded = discardMenu(cardFromDiscard);
             }
         }
     }
@@ -149,7 +152,7 @@ public class RummyGame {
 
     private boolean meldMenu() {
         int handSize = currentPlayer.hand.size();
-        System.out.printf("Enter cards to meld, valid options 1 - %d\n", handSize);
+        System.out.printf("Enter cards to meld (1 - %d)\n", handSize);
         // get the card positions from the user
         ArrayList<Integer> cardPositions = getManyIntsRange(1, handSize);
 
@@ -173,11 +176,11 @@ public class RummyGame {
 
     private void layOffMenu() {
         int meldCount = melds.size();
-        System.out.printf("Enter the meld to lay off onto, valid options 1 - %d\n", meldCount);
+        System.out.printf("Enter the meld to lay off onto (1 - %d)\n", meldCount);
         int meldNumber = getIntRangeInput(1, meldCount);
 
         int handSize = currentPlayer.hand.size();
-        System.out.printf("Enter cards to lay off, valid options 1 - %d\n", handSize);
+        System.out.printf("Enter cards to lay off (1 - %d)\n", handSize);
         // get the card positions from the user
         ArrayList<Integer> cardPositions = getManyIntsRange(1, handSize);
 
@@ -198,18 +201,24 @@ public class RummyGame {
     }
 
     private boolean discardMenu(Card fromDiscard) {
+
+        if (fromDiscard != null) {
+            System.out.println("Unable to discard this turn: " + fromDiscard);
+        }
+
         int handSize = currentPlayer.hand.size();
-        System.out.printf("Enter the card you want to discard, valid options 1 - %d\n", handSize);
+        System.out.printf("Enter the card you want to discard (1 - %d)\n", handSize);
         int cardPosition = getIntRangeInput(1, handSize);
         cardPosition -= 1;  // -1 to match hand index
 
         Card cardToDiscard = currentPlayer.hand.getCard(cardPosition);
         if (cardToDiscard == fromDiscard) {
-            System.out.println("That card was from the discard pile, you can't put it back this turn.");
+            System.out.println("That card was from the discard pile, you can't discard it this turn.");
             return false;
         }
 
         discard.addCard(cardToDiscard);
+        // TODO add removeCard method that takes card object as an argument
         currentPlayer.hand.removeCard(cardPosition);
         return true;
     }
