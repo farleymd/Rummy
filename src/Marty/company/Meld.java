@@ -100,6 +100,10 @@ public class Meld {
         }
     }
 
+    public void addComputerCard(){
+        //TODO ADD RUN/GROUP FROM COMPUTER HAND
+    }
+
     public boolean meldDesktopIsEmpty(){
         boolean isEmpty = false;
 

@@ -8,6 +8,7 @@ import java.util.Random;
  */
 public class DiscardPile {
     private ArrayList<Card> discardPile;
+    private int size;
 
     public DiscardPile() {
         discardPile = new ArrayList<Card>();
@@ -39,13 +40,18 @@ public class DiscardPile {
         return;
     }
 
+    public Card lastDiscardCard(){
+        Card lastDiscard = discardPile.get(size);
+        return lastDiscard;
+    }
+
     public boolean isEmpty() {
 
         return discardPile.isEmpty();
     }
 
     public int getSize(){
-        int size = discardPile.size();
+        this.size = discardPile.size();
         return size;
     }
 }

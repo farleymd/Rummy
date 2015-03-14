@@ -24,13 +24,13 @@ public class Main {
             Meld meldDesktop = new Meld();
 
             Hand humanHand = humanPlayer.getPlayerHand();
-            humanHand.buildHand(newDeck);
+            //humanHand.buildHand(newDeck);
             //TODO test build
-            //humanHand.testBuild(newDeck);
+            humanHand.testBuild2(newDeck);
 
             Hand computerHand = computerPlayer.getPlayerHand();
-            computerHand.buildHand(newDeck);
-            //computerHand.testBuild(newDeck);
+            //computerHand.buildHand(newDeck);
+            computerHand.testBuild(newDeck);
 
             newDiscard.displayDiscardFirstTime(newDeck);
 
@@ -52,6 +52,8 @@ public class Main {
         //Player draw
         System.out.println(ANSI_black + "Would you like to draw from the deck or the discard pile?");
         String userDraw = scanner.next();
+        boolean isGroup = false;
+        boolean isRun = false;
 
         if (userDraw.equalsIgnoreCase("Deck")){
             Card newCard = newDeck.drawFromDeck();
@@ -63,32 +65,37 @@ public class Main {
             playerHand.addCard(newCard);
             playerHand.displayHand();
         }
+        
+        //can meld only once per turn
 
-        playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand, humanPlayer);
-        playerHand.checkForRun("humanPlayer",meldDesktop, playerHand, humanPlayer);
+        isGroup = playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand, humanPlayer);
 
-        boolean noMelds = meldDesktop.meldDesktopIsEmpty(); //are there any melds on the board?
+        if (isGroup == false) {
+            isRun = playerHand.checkForRun("humanPlayer", meldDesktop, playerHand, humanPlayer);
 
-        if (noMelds== false){
-            System.out.println(ANSI_black + "Would you like to meld an individual card? Y or N");
-            String userAnswer = scanner.next();
+            if (isRun == false) {
+                boolean noMelds = meldDesktop.meldDesktopIsEmpty(); //are there any melds on the board?
+                if (noMelds == false) {
+                    System.out.println(ANSI_black + "Would you like to meld an individual card? Y or N");
+                }
+                String userAnswer = scanner.next();
 
-            if (userAnswer.equalsIgnoreCase("Y")){
-                System.out.println(ANSI_black + "What card would you like to meld?");
-                int meldCardChoice = scanner.nextInt();
-                meldCardChoice = meldCardChoice - 1;
+                if (userAnswer.equalsIgnoreCase("Y")) {
+                    System.out.println(ANSI_black + "What card would you like to meld?");
+                    int meldCardChoice = scanner.nextInt();
+                    meldCardChoice = meldCardChoice - 1;
 
-                System.out.println(ANSI_black + "Which meld would you like to add the card to?");
-                int meldChoice = scanner.nextInt();
-                meldChoice = meldChoice - 1;
+                    System.out.println(ANSI_black + "Which meld would you like to add the card to?");
+                    int meldChoice = scanner.nextInt();
+                    meldChoice = meldChoice - 1;
 
 
-                Card meldCard = playerHand.getCard(meldCardChoice);
+                    Card meldCard = playerHand.getCard(meldCardChoice);
 
-                meldDesktop.addIndividualCard(meldCard, meldChoice, playerHand, humanPlayer);
+                    meldDesktop.addIndividualCard(meldCard, meldChoice, playerHand, humanPlayer);
 
+                }
             }
-
         }
         System.out.println(ANSI_black + "Which card would you like to discard? Type the number beside the card.");
         int playerDiscardChoice = scanner.nextInt();
@@ -101,8 +108,32 @@ public class Main {
     public static void runComputerTurn(Hand computerHand, Deck newDeck, DiscardPile newDiscard,
                                        Player computerPlayer, Meld meldDesktop){
         computerHand.computerHandSort();
-        computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand, computerPlayer);
-        computerHand.checkForRun("computerPlayer",meldDesktop, computerHand, computerPlayer);
+
+        boolean isGroup = false;
+        boolean isRun = false;
+
+        //computer decides deck or discard draw
+        int computerChoice = computerHand.computerDraw(newDiscard, computerHand);
+
+        if (computerChoice == 0){  ///draw from deck choice
+            Card newCard = newDeck.drawFromDeck();
+            computerHand.addCard(newCard);
+        } else if (computerChoice == 1){ //draw from discard
+            Card newCard = newDiscard.drawFromDiscard();
+            computerHand.addCard(newCard);
+        }
+
+        //can only meld once. check group first. if no group, check run. if no run, ask to meld a card
+
+        isGroup = computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand, computerPlayer);
+
+        if (isGroup == false){
+            isRun = computerHand.checkForRun("computerPlayer",meldDesktop, computerHand, computerPlayer);
+
+            if (isRun == false){
+                meldDesktop.addComputerCard();
+            }
+        }
 
         //TODO make computer less stupid about discard
         Random generator = new Random();

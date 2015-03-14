@@ -31,9 +31,39 @@ public class Hand {
         return handCard;
     }
 
+    public ArrayList buildHand(Deck deck){
+
+        for (int i = 0; i < 10; i++)
+        {
+            Card newCard = deck.drawFromDeck();
+            handCard.add(newCard);
+        }
+        return handCard;
+    }
+
+    public void displayHand(){
+        Collections.sort(handCard);
+        for (int i = 0; i < handCard.size(); i++){
+            int identifier = i+1;
+            System.out.print(ANSI_black + identifier + ". " + ANSI_red + handCard.get(i).toString() + " ");
+        }
+        System.out.println("\n");
+    }
+
     public int getSize(Hand playerHand){
         int size = handCard.size();
         return size;
+    }
+
+    public boolean notEmpty(){
+        boolean empty = false;
+        int handSize = handCard.size();
+        if (handSize != 0){
+            empty = false;
+        } else {
+            empty = true;
+        }
+        return empty;
     }
 
     public ArrayList testBuild(Deck deck){
@@ -67,41 +97,23 @@ public class Hand {
         return handCard;
     }
 
-    public ArrayList buildHand(Deck deck){
+    public ArrayList testBuild2(Deck deck) {
+        Card card1 = new Card(2, 1);
+        handCard.add(card1);
 
-        for (int i = 0; i < 10; i++)
-        {
-            Card newCard = deck.drawFromDeck();
-            handCard.add(newCard);
-        }
+        Card card2 = new Card(4, 2);
+        handCard.add(card2);
+
+        Card card3 = new Card(0, 2);
+        handCard.add(card3);
+
+        Card card4 = new Card(9, 2);
+        handCard.add(card4);
+
         return handCard;
     }
 
-    public void displayHand(){
-        Collections.sort(handCard);
-        for (int i = 0; i < handCard.size(); i++){
-            int identifier = i+1;
-            System.out.print(ANSI_black + identifier + ". " + ANSI_red + handCard.get(i).toString() + " ");
-        }
-        System.out.println("\n");
-    }
-
-    public void computerHandSort(){
-        Collections.sort(handCard);
-    }
-
-    public boolean notEmpty(){
-        boolean empty = false;
-        int handSize = handCard.size();
-        if (handSize != 0){
-            empty = false;
-        } else {
-            empty = true;
-        }
-        return empty;
-    }
-
-    public void checkForRun(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
+    public boolean checkForRun(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
         Scanner scanner = new Scanner(System.in);
         boolean isRun = false;
         int numberOfCards = playerHand.getSize(playerHand);
@@ -158,6 +170,7 @@ public class Hand {
 
                                             if (userAnswer.equalsIgnoreCase("Y")) {
                                                 meldDesktop.addMeldRun(cardRun);
+                                                isRun = true;
 
                                                 //after adding the run to the meld desktop, remove them from the player's
                                                 //hand and get points
@@ -177,6 +190,7 @@ public class Hand {
                                             }
                                         } else {
                                             meldDesktop.addMeldRun(cardRun);
+                                            isRun = true;
 
                                             Iterator<Card> testRoll = cardRun.iterator();
                                             while (testRoll.hasNext()) {
@@ -199,10 +213,12 @@ public class Hand {
                 }
             }
         }
+
+        return isRun;
     }
 
     //tests if three or four cards are the same group
-    public void checkForGroup(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
+    public boolean checkForGroup(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
         ArrayList<Card> rankAce = new ArrayList<Card>();
         ArrayList<Card> rank2 = new ArrayList<Card>();
         ArrayList<Card> rank3 = new ArrayList<Card>();
@@ -342,8 +358,47 @@ public class Hand {
                     break;
             }
         }
+
+        return found;
     }
 
+    public void computerHandSort(){
+        Collections.sort(handCard);
+    }
+
+    public int computerDraw(DiscardPile newDiscard, Hand computerHand){
+        //get last card of discard pile
+        int computerChoice = 0;
+
+        Card lastDiscard = newDiscard.lastDiscardCard();
+        int discardSuit = lastDiscard.getSuit();
+        int discardRank = lastDiscard.getRank();
+        int handSize = computerHand.getSize(computerHand);
+
+        //compare lastDiscard to hand
+        for (int i = 0; i < handSize; i++){
+            Card compareCard = computerHand.getCard(i);
+            int suit = compareCard.getSuit();
+            int rank = compareCard.getRank();
+
+            //if rank is the same
+            if (discardRank == rank || (discardSuit == suit && Math.abs(discardRank - rank) == 1)){
+                computerChoice = 1;
+                break;
+            } else {
+                computerChoice = 0;
+            }
+
+            //if suit is the same and within -1 or +1 of any cards
+//            if (discardSuit == suit && Math.abs(rank - discardRank) != 1){
+//                computerChoice = 1;
+//            } else {
+//                computerChoice = 0;
+//            }
+        }
+
+        return computerChoice;
+    }
 
 
 }
