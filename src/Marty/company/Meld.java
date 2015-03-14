@@ -25,7 +25,6 @@ public class Meld {
 
     public void addMeldRun(ArrayList runToAdd){
         meldDesktop.add(runToAdd);
-        return;
     }
 
     //ask the user if they want to attach the group to the meld
@@ -37,11 +36,10 @@ public class Meld {
         String rankString = ranks[rank];
 
         if (playerName.equalsIgnoreCase("humanPlayer")){
-            System.out.println("You have a group of " + rankString + "s! Do you want to meld the group? Y or N");
+            System.out.println(ANSI_black + "You have a group of " + rankString + "s! Do you want to meld the group? Y or N");
             String playerAnswer = scanner.next();
             if (playerAnswer.equalsIgnoreCase("Y")){
                 meldDesktop.addMeldGroup(groupToAdd);
-
 
                 //remove the cards from the player's hand
                 Iterator<Card> testRoll = groupToAdd.iterator();
@@ -52,7 +50,6 @@ public class Meld {
                     points = removeCard.pointValue() + points;
                     player.setScore(points);
                 }
-
                 //display the card desktop
                 meldDesktop.printMelds();
                 playerHand.displayHand();
@@ -72,6 +69,8 @@ public class Meld {
     }
 
     public void addIndividualCard(Card meldCard, int arrayIndex, Hand playerHand, Player player) {
+        //TODO add individual run checker
+
         int points = 0;
         ArrayList<Card> groupCheck = new ArrayList<Card>();
         groupCheck = meldDesktop.get(arrayIndex);

@@ -15,12 +15,6 @@ public class Main {
             newGame(humanPlayer, computerPlayer);
         }
 
-//        Hand testHand = new Hand();
-//        testHand.testBuild(newDeck);
-//        testHand.displayHand();
-//
-//        testHand.checkForGroup();
-
     }
 
         public static void newGame(Player humanPlayer, Player computerPlayer){
@@ -36,6 +30,7 @@ public class Main {
 
             Hand computerHand = computerPlayer.getPlayerHand();
             computerHand.buildHand(newDeck);
+            //computerHand.testBuild(newDeck);
 
             newDiscard.displayDiscardFirstTime(newDeck);
 
@@ -105,6 +100,7 @@ public class Main {
 
     public static void runComputerTurn(Hand computerHand, Deck newDeck, DiscardPile newDiscard,
                                        Player computerPlayer, Meld meldDesktop){
+        computerHand.computerHandSort();
         computerHand.checkForGroup("computerPlayer", meldDesktop, computerHand, computerPlayer);
         computerHand.checkForRun("computerPlayer",meldDesktop, computerHand, computerPlayer);
 

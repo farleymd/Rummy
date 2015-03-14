@@ -27,7 +27,7 @@ public class Hand {
 
     public ArrayList removeCard (Card newCard){
         handCard.remove(newCard);
-        Collections.sort(handCard);
+        //Collections.sort(handCard);
         return handCard;
     }
 
@@ -37,31 +37,31 @@ public class Hand {
     }
 
     public ArrayList testBuild(Deck deck){
-        Card card1 = new Card(0,0);
+        Card card1 = new Card(8,2);
         handCard.add(card1);
 
-        Card card2 = new Card(0,1);
+        Card card2 = new Card(4,2);
         handCard.add(card2);
 
         Card card3 = new Card(0,2);
         handCard.add(card3);
 
-        Card card4 = new Card(0,3);
+        Card card4 = new Card(6,2);
         handCard.add(card4);
 
-        Card card5 = new Card(1,0);
+        Card card5 = new Card(7,2);
         handCard.add(card5);
 
-        Card card6 = new Card(1,1);
+        Card card6 = new Card(5,2);
         handCard.add(card6);
 
         Card card7 = new Card(12,3);
         handCard.add(card7);
 
-        Card card8 = new Card(11,3);
+        Card card8 = new Card(11,2);
         handCard.add(card8);
 
-        Card card9 = new Card(10,3);
+        Card card9 = new Card(8,3);
         handCard.add(card9);
 
         return handCard;
@@ -86,6 +86,10 @@ public class Hand {
         System.out.println("\n");
     }
 
+    public void computerHandSort(){
+        Collections.sort(handCard);
+    }
+
     public boolean notEmpty(){
         boolean empty = false;
         int handSize = handCard.size();
@@ -100,83 +104,101 @@ public class Hand {
     public void checkForRun(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
         Scanner scanner = new Scanner(System.in);
         boolean isRun = false;
-        int numberOfCards = handCard.size();
+        int numberOfCards = playerHand.getSize(playerHand);
         if (numberOfCards < 3 || numberOfCards > 13) {
             isRun = false;
         }
         ArrayList<Card> cardRun = new ArrayList<Card>();
+        int beginnerCardCounter = 0;
 
-        // make sure cards are sorted
-        Collections.sort(handCard);
-
-        // compare all suits to the first card, and ranks starting with the first
-        int suitCompare = handCard.get(0).getSuit();
-        int previousRank = handCard.get(0).getRank();
+        // beginning with first card, compare all cards in the player's hand
         for (int cardNum = 1; cardNum < numberOfCards; cardNum++) {
-            int thisSuit = handCard.get(cardNum).getSuit();
-            int thisRank = handCard.get(cardNum).getRank();
+            Card beginnerCard = playerHand.getCard(beginnerCardCounter);
+            int suitCompare = beginnerCard.getSuit();
+            int previousRank = beginnerCard.getRank();
+            Card compareCard = playerHand.getCard(cardNum);
+            int thisSuit = compareCard.getSuit();
+            int thisRank = compareCard.getRank();
 
-            if (thisSuit != suitCompare) {
-                isRun = false;
-            }
+            if (thisRank != previousRank){  //if cards have the same rank, skip
+                if (thisSuit != suitCompare) {
+                    isRun = false;
+                    beginnerCardCounter = beginnerCardCounter + 1;
+                } else {
+                    if (Math.abs(thisRank - previousRank) != 1) {
+                        isRun = false;
+                        beginnerCardCounter = beginnerCardCounter + 1;
+                    } else {
+                        if (cardRun.size() == 0) {
+                            cardRun.add(beginnerCard);
+                        }
+                        cardRun.add(compareCard);
 
-            if (Math.abs(thisRank - previousRank) != 1) {
-                isRun = false;
-            } else {
-                if (cardRun.size() == 0) {
-                    Card firstCard = new Card(handCard.get(0).getRank(), suitCompare = handCard.get(0).getSuit());
-                    cardRun.add(firstCard);
-                }
+                        //compare the card after the last one checked in the player's hand to the last card in the array
+                        for (int cardNum2 = cardNum + 1; cardNum2 < numberOfCards; cardNum2++) {
+                            Card lastRunCard = cardRun.get(1);
+                            int lastSuitCompare = lastRunCard.getSuit();
+                            int lastRankCompare = lastRunCard.getRank();
+                            Card newCompare = playerHand.getCard(cardNum2);
+                            int newSuit = newCompare.getSuit();
+                            int newRank = newCompare.getRank();
 
-                Card addCard = new Card(thisRank, thisSuit);
-                cardRun.add(addCard);
-                previousRank = thisRank;
+                            if (newSuit != lastSuitCompare) {
+                                break;
+                            } else {
+                                if (Math.abs(newRank - lastRankCompare) != 1) {
+                                    break;
+                                } else {
+                                    cardRun.add(newCompare);
 
-                if (cardRun.size()>= 3){
-                    if (playerName.equalsIgnoreCase("humanPlayer")){
-                        System.out.println("You have a run! Would you like to meld the run?");
-                        String userAnswer = scanner.next();
+                                    if (cardRun.size() >= 3) {
+                                        if (playerName.equalsIgnoreCase("humanPlayer")) {
+                                            System.out.println(ANSI_black + "You have a run! Would you like to meld the run? Y or N");
+                                            String userAnswer = scanner.next();
 
-                        if (userAnswer.equalsIgnoreCase("Y")){
-                            meldDesktop.addMeldRun(cardRun);
+                                            if (userAnswer.equalsIgnoreCase("Y")) {
+                                                meldDesktop.addMeldRun(cardRun);
 
-                            //after adding the run to the meld desktop, remove them from the player's
-                            //hand and get points
-                            Iterator<Card> testRoll = cardRun.iterator();
-                            while (testRoll.hasNext()){
-                                int points = 0;
-                                Card removeCard = testRoll.next();
-                                playerHand.removeCard(removeCard);
-                                points = removeCard.pointValue() + points;
-                                player.setScore(points);
+                                                //after adding the run to the meld desktop, remove them from the player's
+                                                //hand and get points
+                                                Iterator<Card> testRoll = cardRun.iterator();
+                                                while (testRoll.hasNext()) {
+                                                    int points = 0;
+                                                    Card removeCard = testRoll.next();
+                                                    playerHand.removeCard(removeCard);
+                                                    points = removeCard.pointValue() + points;
+                                                    player.setScore(points);
+                                                }
+
+                                                //display the card desktop
+                                                meldDesktop.printMelds();
+                                                playerHand.displayHand();
+                                                numberOfCards = playerHand.getSize(playerHand);
+                                            }
+                                        } else {
+                                            meldDesktop.addMeldRun(cardRun);
+
+                                            Iterator<Card> testRoll = cardRun.iterator();
+                                            while (testRoll.hasNext()) {
+                                                int points = 0;
+                                                Card removeCard = testRoll.next();
+                                                playerHand.removeCard(removeCard);
+                                                points = removeCard.pointValue() + points;
+                                                player.setScore(points);
+                                            }
+
+                                            //don't display desktop during computer's turn
+                                            numberOfCards = playerHand.getSize(playerHand);
+
+                                        }
+                                    }
+                                }
                             }
-
-                            //display the card desktop
-                            meldDesktop.printMelds();
-                            playerHand.displayHand();
                         }
-                    }else{
-                        meldDesktop.addMeldRun(cardRun);
-
-                        Iterator<Card> testRoll = cardRun.iterator();
-                        while (testRoll.hasNext()){
-                            int points = 0;
-                            Card removeCard = testRoll.next();
-                            playerHand.removeCard(removeCard);
-                            points = removeCard.pointValue() + points;
-                            player.setScore(points);
-                        }
-
-                        //display the card desktop
-                        meldDesktop.printMelds();
-                        playerHand.displayHand();
                     }
-
                 }
             }
         }
-
-        // all tests passed
     }
 
     //tests if three or four cards are the same group
@@ -321,5 +343,7 @@ public class Hand {
             }
         }
     }
+
+
 
 }
