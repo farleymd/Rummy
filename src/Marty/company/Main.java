@@ -25,7 +25,7 @@ public class Main {
 
             Hand humanHand = humanPlayer.getPlayerHand();
             humanHand.buildHand(newDeck);
-            //TODO test build
+
             //humanHand.testBuild2(newDeck);
 
             Hand computerHand = computerPlayer.getPlayerHand();
@@ -38,16 +38,37 @@ public class Main {
             boolean computerHandEmpty = computerHand.notEmpty();
 
             while (humanHandEmpty == false && computerHandEmpty == false){
-            runHumanTurn(humanHand, newDeck, newDiscard, humanPlayer, computerPlayer, meldDesktop);
-            runComputerTurn(computerHand, newDeck, newDiscard, computerPlayer, meldDesktop);
+                runHumanTurn(humanHand, newDeck, newDiscard, humanPlayer, computerPlayer, meldDesktop);
+                runComputerTurn(computerHand, newDeck, newDiscard, computerPlayer, meldDesktop);
+
+                humanHandEmpty = humanHand.notEmpty();
+                computerHandEmpty = computerHand.notEmpty();
         }
 
             if (humanHandEmpty == true){
+                System.out.println("You won this hand! Let's total up the points and start a new game.");
                 computerHand.handPoints(computerHand, humanPlayer);
+                boolean humanWon = humanPlayer.gameWon(humanPlayer);
+                boolean computerWon = computerPlayer.gameWon(computerPlayer);
+                while (humanWon == false || computerWon == false){
+                    newGame(humanPlayer, computerPlayer);
+                }
+                if (humanWon == true){
+                    System.out.println("Hurray! You've won the game!");
+                }
             }
 
             if (computerHandEmpty == true){
+                System.out.println("The computer won this hand. Let's total up the points and start a new game.");
                 humanHand.handPoints(humanHand, computerPlayer);
+                boolean humanWon = humanPlayer.gameWon(humanPlayer);
+                boolean computerWon = computerPlayer.gameWon(computerPlayer);
+                while (humanWon == false || computerWon == false){
+                    newGame(humanPlayer, computerPlayer);
+                }
+                if (computerWon == true){
+                    System.out.println("Sorry, looks like the computer beat you this time around!");
+                }
             }
     }
 

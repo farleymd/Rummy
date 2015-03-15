@@ -6,7 +6,7 @@ import java.util.*;
  * Created by marty.farley on 3/1/2015.
  */
 public class Hand {
-    private ArrayList<Card> handCard = new ArrayList<Card>(10);
+    private ArrayList<Card> handCard = new ArrayList<Card>();
     private String ANSI_red = "\u001B[35m";
     private String ANSI_black = "\u001B[30m";
 
@@ -76,53 +76,6 @@ public class Hand {
             points = cardForPoints.pointValue() + points;
             player.setScore(points);
         }
-    }
-
-    public ArrayList testBuild(Deck deck){
-        Card card1 = new Card(8,2);
-        handCard.add(card1);
-
-        Card card2 = new Card(4,2);
-        handCard.add(card2);
-
-        Card card3 = new Card(0,2);
-        handCard.add(card3);
-
-        Card card4 = new Card(6,2);
-        handCard.add(card4);
-
-        Card card5 = new Card(7,2);
-        handCard.add(card5);
-
-        Card card6 = new Card(5,2);
-        handCard.add(card6);
-
-        Card card7 = new Card(12,3);
-        handCard.add(card7);
-
-        Card card8 = new Card(11,2);
-        handCard.add(card8);
-
-        Card card9 = new Card(8,3);
-        handCard.add(card9);
-
-        return handCard;
-    }
-
-    public ArrayList testBuild2(Deck deck) {
-        Card card1 = new Card(2, 1);
-        handCard.add(card1);
-
-        Card card2 = new Card(4, 2);
-        handCard.add(card2);
-
-        Card card3 = new Card(0, 2);
-        handCard.add(card3);
-
-        Card card4 = new Card(9, 2);
-        handCard.add(card4);
-
-        return handCard;
     }
 
     public boolean checkForRun(String playerName, Meld meldDesktop, Hand playerHand, Player player) {
@@ -440,6 +393,58 @@ public class Hand {
            }
         }
         return discardCard;
+    }
+
+    //TEST DECK BUILDS
+    public ArrayList testBuild(Deck deck){
+        Card card1 = new Card(8,2);
+        handCard.add(card1);
+
+        Card card2 = new Card(4,2);
+        handCard.add(card2);
+
+        Card card3 = new Card(0,2);
+        handCard.add(card3);
+
+        Card card4 = new Card(6,2);
+        handCard.add(card4);
+
+        Card card5 = new Card(7,2);
+        handCard.add(card5);
+
+        Card card6 = new Card(5,2);
+        handCard.add(card6);
+
+        Card card7 = new Card(12,3);
+        handCard.add(card7);
+
+        Card card8 = new Card(11,2);
+        handCard.add(card8);
+
+        Card card9 = new Card(8,3);
+        handCard.add(card9);
+
+        return handCard;
+    }
+
+    public ArrayList testBuild2(Deck deck) {
+        Card card1 = new Card(2, 1);
+        handCard.add(card1);
+
+        Card card2 = new Card(4, 2);
+        handCard.add(card2);
+
+        Card card3 = new Card(0, 2);
+        handCard.add(card3);
+
+        Card card4 = new Card(9, 2);
+        handCard.add(card4);
+
+        return handCard;
+    }
+
+    public ArrayList testBuildEmpty (Deck deck){
+        return handCard;
     }
 
 

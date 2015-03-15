@@ -26,17 +26,17 @@ public class Player {
         this.playerHand = playerHand;
     }
 
-//    private boolean gameWon(Player player) {
-//        int score = this.getScore();
-//        boolean gameWon = false;
-//
-//        if (score != 500){
-//            gameWon = false;
-//        } else {
-//            gameWon = true;
-//        }
-//
-//        return gameWon;
-//    }
+    public boolean gameWon(Player player) {
+        int score = this.getScore();
+        boolean gameWon = false;
+
+        if (score != 100){
+            gameWon = false;
+        } else {
+            gameWon = true;
+        }
+
+        return gameWon;
+    }
 
 }

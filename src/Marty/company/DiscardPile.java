@@ -41,7 +41,8 @@ public class DiscardPile {
     }
 
     public Card lastDiscardCard(){
-        Card lastDiscard = discardPile.get(size);
+        int index = discardPile.size();
+        Card lastDiscard = discardPile.get(discardPile.size() -1);
         return lastDiscard;
     }
 
