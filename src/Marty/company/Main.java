@@ -24,9 +24,8 @@ public class Main {
             Meld meldDesktop = new Meld();
 
             Hand humanHand = humanPlayer.getPlayerHand();
-            humanHand.buildHand(newDeck);
-
-            //humanHand.testBuild2(newDeck);
+            //humanHand.buildHand(newDeck);
+            humanHand.testBuild(newDeck);
 
             Hand computerHand = computerPlayer.getPlayerHand();
             computerHand.buildHand(newDeck);
@@ -121,7 +120,10 @@ public class Main {
 
                     Card meldCard = playerHand.getCard(meldCardChoice);
 
-                    meldDesktop.addIndividualCard(meldCard, meldChoice, playerHand, humanPlayer);
+                    meldDesktop.addIndividualGroupCard(meldCard, meldChoice, playerHand, humanPlayer);
+                    meldDesktop.addIndividualRunCard(meldCard, meldChoice, playerHand, humanPlayer);
+
+                    meldDesktop.printMelds();
                 }
 
                 }

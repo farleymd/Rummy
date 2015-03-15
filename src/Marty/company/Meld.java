@@ -68,8 +68,7 @@ public class Meld {
         }
     }
 
-    public void addIndividualCard(Card meldCard, int arrayIndex, Hand playerHand, Player player) {
-        //TODO add individual run checker
+    public void addIndividualGroupCard(Card meldCard, int arrayIndex, Hand playerHand, Player player) {
 
         int points = 0;
         ArrayList<Card> groupCheck = new ArrayList<Card>();
@@ -91,6 +90,7 @@ public class Meld {
                 playerHand.removeCard(meldCard);
                 points = meldCard.pointValue() + points;
                 player.setScore(points);
+                System.out.println("That card was added to that group.");
 
                 found = false;
             }else {
@@ -99,6 +99,47 @@ public class Meld {
             }
         }
     }
+
+    public void addIndividualRunCard(Card meldCard, int arrayIndex, Hand playerHand, Player player) {
+
+        int points = 0;
+        ArrayList<Card> groupCheck = new ArrayList<Card>();
+        groupCheck = meldDesktop.get(arrayIndex);
+
+        Iterator<Card> groupChecker = groupCheck.iterator();
+        boolean found = true;    //way to break out of iteration
+        //while (groupChecker.hasNext() && found == true) {
+            //Card groupCheckCard = groupChecker.next();
+
+           Card groupCheckCard = groupCheck.get(groupCheck.size()-1);
+
+            int cardRank = meldCard.getRank();
+            int groupRank = groupCheckCard.getRank();
+
+            int cardSuit = meldCard.getSuit();
+            int groupSuit = groupCheckCard.getSuit();
+
+            if (cardSuit == groupSuit){ //belongs to the same suit
+                if (Math.abs(groupRank - cardRank) == 1){ //ranks are within 1 of each other
+                    //add the card to the meld
+                    meldDesktop.get(arrayIndex).add(meldCard);
+                    //remove individual card from player's hand, get points for it
+                    playerHand.removeCard(meldCard);
+                    points = meldCard.pointValue() + points;
+                    player.setScore(points);
+                    System.out.println("That card was added to that run.");
+                    found = false;
+                } else {
+                    System.out.println("That card doesn't belong to this run.");
+                    found = false;
+                }
+            } else {
+                System.out.println("That card doesn't have the same suit.");
+                found = false;
+            }
+
+        }
+    //}
 
     public void addComputerCard(){
         //TODO ADD RUN/GROUP FROM COMPUTER HAND
