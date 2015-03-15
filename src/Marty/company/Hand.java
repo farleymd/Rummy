@@ -66,6 +66,18 @@ public class Hand {
         return empty;
     }
 
+    public void handPoints(Hand playerHand, Player player){
+
+        int handSize = playerHand.getSize(playerHand);
+        int points = 0;
+
+        for (int i = 0; i < handSize; i++) {
+            Card cardForPoints = playerHand.getCard(i);
+            points = cardForPoints.pointValue() + points;
+            player.setScore(points);
+        }
+    }
+
     public ArrayList testBuild(Deck deck){
         Card card1 = new Card(8,2);
         handCard.add(card1);
@@ -381,23 +393,53 @@ public class Hand {
             int suit = compareCard.getSuit();
             int rank = compareCard.getRank();
 
-            //if rank is the same
+            //if rank is the same or there's a difference of 1 between the card ranks
             if (discardRank == rank || (discardSuit == suit && Math.abs(discardRank - rank) == 1)){
                 computerChoice = 1;
                 break;
             } else {
                 computerChoice = 0;
             }
-
-            //if suit is the same and within -1 or +1 of any cards
-//            if (discardSuit == suit && Math.abs(rank - discardRank) != 1){
-//                computerChoice = 1;
-//            } else {
-//                computerChoice = 0;
-//            }
         }
 
         return computerChoice;
+    }
+
+    public Card computerDiscard(Hand computerHand){
+
+        int handSize = computerHand.getSize(computerHand);
+        handSize = handSize - 1;
+        Card discardCard = computerHand.getCard(handSize);
+        boolean notGroup = false;
+        boolean notRun = false;
+
+        for (int i = 0; i< handSize; i++){
+            Card originalCard = computerHand.getCard(i);
+            int originalSuit = originalCard.getSuit();
+            int originalRank = originalCard.getRank();
+
+            Card compareCard = computerHand.getCard(i+1);
+            int compareSuit = compareCard.getSuit();
+            int compareRank = compareCard.getRank();
+
+            //can't be group
+            if (originalRank != compareRank){
+                notGroup = true;
+            } else {
+                notGroup = false;
+            }
+
+            if (originalSuit != compareSuit){
+                notRun = true;
+            } else {
+                notRun = false;
+            }
+
+           if ((notGroup == true) && (notRun == true)){
+               discardCard = compareCard;
+           }
+        }
+        return discardCard;
     }
 
 

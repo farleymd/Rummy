@@ -24,13 +24,13 @@ public class Main {
             Meld meldDesktop = new Meld();
 
             Hand humanHand = humanPlayer.getPlayerHand();
-            //humanHand.buildHand(newDeck);
+            humanHand.buildHand(newDeck);
             //TODO test build
-            humanHand.testBuild2(newDeck);
+            //humanHand.testBuild2(newDeck);
 
             Hand computerHand = computerPlayer.getPlayerHand();
-            //computerHand.buildHand(newDeck);
-            computerHand.testBuild(newDeck);
+            computerHand.buildHand(newDeck);
+            //computerHand.testBuild(newDeck);
 
             newDiscard.displayDiscardFirstTime(newDeck);
 
@@ -41,6 +41,14 @@ public class Main {
             runHumanTurn(humanHand, newDeck, newDiscard, humanPlayer, computerPlayer, meldDesktop);
             runComputerTurn(computerHand, newDeck, newDiscard, computerPlayer, meldDesktop);
         }
+
+            if (humanHandEmpty == true){
+                computerHand.handPoints(computerHand, humanPlayer);
+            }
+
+            if (computerHandEmpty == true){
+                humanHand.handPoints(humanHand, computerPlayer);
+            }
     }
 
     public static void runHumanTurn(Hand playerHand, Deck newDeck, DiscardPile newDiscard, Player humanPlayer,
@@ -65,7 +73,7 @@ public class Main {
             playerHand.addCard(newCard);
             playerHand.displayHand();
         }
-        
+
         //can meld only once per turn
 
         isGroup = playerHand.checkForGroup("humanPlayer", meldDesktop, playerHand, humanPlayer);
@@ -77,7 +85,7 @@ public class Main {
                 boolean noMelds = meldDesktop.meldDesktopIsEmpty(); //are there any melds on the board?
                 if (noMelds == false) {
                     System.out.println(ANSI_black + "Would you like to meld an individual card? Y or N");
-                }
+
                 String userAnswer = scanner.next();
 
                 if (userAnswer.equalsIgnoreCase("Y")) {
@@ -93,6 +101,7 @@ public class Main {
                     Card meldCard = playerHand.getCard(meldCardChoice);
 
                     meldDesktop.addIndividualCard(meldCard, meldChoice, playerHand, humanPlayer);
+                }
 
                 }
             }
@@ -136,13 +145,11 @@ public class Main {
         }
 
         //TODO make computer less stupid about discard
-        Random generator = new Random();
-        int index = generator.nextInt(computerHand.getSize(computerHand));
+        Card computerDiscardCard = computerHand.computerDiscard(computerHand);
+        ;
+        computerHand.removeCard(computerDiscardCard);
 
-        Card playerDiscardCard = computerHand.getCard(index);
-        computerHand.removeCard(playerDiscardCard);
-
-        newDiscard.addToDiscardPile(playerDiscardCard);
+        newDiscard.addToDiscardPile(computerDiscardCard);
 
     }
 
