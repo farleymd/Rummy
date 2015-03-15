@@ -24,8 +24,8 @@ public class Main {
             Meld meldDesktop = new Meld();
 
             Hand humanHand = humanPlayer.getPlayerHand();
-            //humanHand.buildHand(newDeck);
-            humanHand.testBuild(newDeck);
+            humanHand.buildHand(newDeck);
+            //humanHand.testBuild(newDeck);
 
             Hand computerHand = computerPlayer.getPlayerHand();
             computerHand.buildHand(newDeck);
@@ -163,15 +163,13 @@ public class Main {
             isRun = computerHand.checkForRun("computerPlayer",meldDesktop, computerHand, computerPlayer);
 
             if (isRun == false){
-                meldDesktop.addComputerCard();
+                meldDesktop.addComputerGroup(computerHand, computerPlayer);
+                meldDesktop.addComputerRun(computerHand, computerPlayer);
             }
         }
 
-        //TODO make computer less stupid about discard
         Card computerDiscardCard = computerHand.computerDiscard(computerHand);
-        ;
         computerHand.removeCard(computerDiscardCard);
-
         newDiscard.addToDiscardPile(computerDiscardCard);
 
     }

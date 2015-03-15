@@ -141,9 +141,79 @@ public class Meld {
         }
     //}
 
-    public void addComputerCard(){
+    public void addComputerGroup(Hand computerHand, Player computerPlayer){
         //TODO ADD RUN/GROUP FROM COMPUTER HAND
+
+        int points = 0;
+        ArrayList<Card> groupCheck = new ArrayList<Card>();
+
+
+        for (int i = 0; i < this.meldDesktop.size(); i++){
+            groupCheck = meldDesktop.get(i);
+
+            Iterator<Card> groupChecker =groupCheck.iterator();
+            boolean found = true;
+            while (groupChecker.hasNext() && found == true){
+                Card groupCheckCard = groupChecker.next();
+
+                for (int x = 0; x < computerHand.getSize(computerHand); x++){
+                    Card meldCard = computerHand.getCard(x);
+
+                    int groupRank = groupCheckCard.getRank();
+                    int cardRank = meldCard.getRank();
+
+                    if (cardRank == groupRank) {
+                        meldDesktop.get(i).add(meldCard);
+                        //remove individual card from player's hand, get points for it
+                        computerHand.removeCard(meldCard);
+                        points = meldCard.pointValue() + points;
+                        computerPlayer.setScore(points);
+
+                        found = false;
+                    }
+                }
+            }
+        }
     }
+
+    public void addComputerRun(Hand computerHand, Player computerPlayer){
+
+        int points = 0;
+        ArrayList<Card> runCheck = new ArrayList<Card>();
+
+
+        for (int i = 0; i < this.meldDesktop.size(); i++) {
+            runCheck = meldDesktop.get(i);
+
+            Iterator<Card> groupChecker = runCheck.iterator();
+            boolean found = true;
+            while (groupChecker.hasNext() && found == true) {
+                Card groupCheckCard = groupChecker.next();
+                for (int x = 0; x < computerHand.getSize(computerHand); x++) {
+
+                    Card meldCard = computerHand.getCard(x);
+                    int cardRank = meldCard.getRank();
+                    int cardSuit = meldCard.getSuit();
+
+                    Card runCheckCard = runCheck.get(runCheck.size() - 1);
+                    int runRank = runCheckCard.getRank();
+                    int runSuit = runCheckCard.getSuit();
+
+                    if (cardSuit == runSuit) { //belongs to the same suit
+                        if (Math.abs(runRank - cardRank) == 1) { //ranks are within 1 of each other
+                            //add the card to the meld
+                            meldDesktop.get(i).add(meldCard);
+                            //remove individual card from player's hand, get points for it
+                            computerHand.removeCard(meldCard);
+                            points = meldCard.pointValue() + points;
+                            computerPlayer.setScore(points);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     public boolean meldDesktopIsEmpty(){
         boolean isEmpty = false;

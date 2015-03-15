@@ -421,23 +421,20 @@ public class Hand {
         Card card8 = new Card(11,2);
         handCard.add(card8);
 
-        Card card9 = new Card(8,3);
-        handCard.add(card9);
-
         return handCard;
     }
 
     public ArrayList testBuild2(Deck deck) {
-        Card card1 = new Card(2, 1);
+        Card card1 = new Card(2, 0);
         handCard.add(card1);
 
-        Card card2 = new Card(4, 2);
+        Card card2 = new Card(2, 1);
         handCard.add(card2);
 
-        Card card3 = new Card(0, 2);
+        Card card3 = new Card(2, 2);
         handCard.add(card3);
 
-        Card card4 = new Card(9, 2);
+        Card card4 = new Card(2, 3);
         handCard.add(card4);
 
         return handCard;
